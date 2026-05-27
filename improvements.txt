@@ -1,0 +1,2197 @@
+═══════════════════════════════════════════════════════════════════════════════
+NATURE LOVERS ADVENTURE v2 — STRATEGIC IMPROVEMENTS ROADMAP
+═══════════════════════════════════════════════════════════════════════════════
+
+This document outlines specific, prioritized improvements to transform Nature Lovers 
+Adventure from a premium brand experience into a high-converting, SEO-visible, 
+differentiated market leader in East African safari tourism.
+
+STATUS: Compiled May 27, 2026 | Priority: CRITICAL → HIGH → MEDIUM
+
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 1: SEO INFRASTRUCTURE — CRITICAL (Make You Visible to Google)
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEM: 
+Your site is currently INVISIBLE to Google. You have no:
+- Sitemap (Google can't crawl systematically)
+- robots.txt (no search engine guidance)
+- Structured data (no rich results, no Map appearance, no FAQ snippets)
+- Canonical tags (duplicate content penalty risk)
+- Meta descriptions targeting real search queries
+- Blog/informational content (zero organic traffic)
+
+This is why neither version ranks for any commercial keyword like "Kenya safari packages" 
+or "Masai Mara tour operator."
+
+SOLUTION (Priority: Implement Week 1-2):
+
+1. CREATE public/robots.txt
+──────────────────────────────────────────────────────────────────────────────
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Sitemap: https://natureloversadventure.co.ke/sitemap.xml
+
+User-agent: AdsBot-Google
+Allow: /
+
+
+2. CREATE public/sitemap.xml (Dynamic or Static)
+──────────────────────────────────────────────────────────────────────────────
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://natureloversadventure.co.ke/</loc>
+    <lastmod>2026-05-27</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://natureloversadventure.co.ke/safari-packages</loc>
+    <lastmod>2026-05-27</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://natureloversadventure.co.ke/contact</loc>
+    <lastmod>2026-05-27</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://natureloversadventure.co.ke/our-story</loc>
+    <lastmod>2026-05-27</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://natureloversadventure.co.ke/services</loc>
+    <lastmod>2026-05-27</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <!-- Add future blog posts here -->
+  <!-- <url><loc>https://...../blog/best-time-masai-mara</loc>...</url> -->
+</urlset>
+
+Future automation: Use a server route to generate dynamic sitemap from your content CMS.
+
+
+3. ADD STRUCTURED DATA (JSON-LD) to Every Page
+──────────────────────────────────────────────────────────────────────────────
+
+A. LocalBusiness Schema (Homepage + All Pages)
+   Why: Puts your business on Google Maps results, local search, knowledge panel
+   
+   Add to <Head> in src/routes/__root.tsx:
+   
+   <script type="application/ld+json">
+   {JSON.stringify({
+     "@context": "https://schema.org",
+     "@type": "LocalBusiness",
+     "name": "Nature Lovers Adventure",
+     "description": "Luxury safari and travel packages across Kenya and Tanzania",
+     "url": "https://natureloversadventure.co.ke",
+     "telephone": "+254724660170",
+     "email": "info@natureloversadventure.co.ke",
+     "address": {
+       "@type": "PostalAddress",
+       "streetAddress": "Your Street Address, Nairobi",
+       "addressLocality": "Nairobi",
+       "addressRegion": "Nairobi County",
+       "postalCode": "XXXXX",
+       "addressCountry": "KE"
+     },
+     "geo": {
+       "@type": "GeoCoordinates",
+       "latitude": "-1.2921",
+       "longitude": "36.8219"
+     },
+     "image": "https://natureloversadventure.co.ke/og-image-1200x630.jpg",
+     "priceRange": "$$$",
+     "openingHoursSpecification": {
+       "@type": "OpeningHoursSpecification",
+       "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+       "opens": "09:00",
+       "closes": "18:00"
+     }
+   })}
+   </script>
+
+B. TouristTrip Schema (Safari Packages Page)
+   Why: Shows packages directly in search results with price, duration, image
+   
+   Add to src/routes/safari-packages.tsx (inside the filtered packages map):
+   
+   <script type="application/ld+json">
+   {JSON.stringify({
+     "@context": "https://schema.org",
+     "@type": "TouristTrip",
+     "name": "${package.title}",
+     "description": "${package.destinations.join(', ')} adventure",
+     "duration": "P${nights}D",
+     "touristTrip": package.destinations.map(dest => ({
+       "@type": "Place",
+       "name": dest
+     })),
+     "priceSpecification": {
+       "@type": "PriceSpecification",
+       "priceCurrency": "KES",
+       "price": "On Request",
+       "availability": "https://schema.org/InStock"
+     },
+     "image": package.image,
+     "provider": {
+       "@type": "Organization",
+       "name": "Nature Lovers Adventure",
+       "url": "https://natureloversadventure.co.ke"
+     }
+   })}
+   </script>
+
+C. BreadcrumbList Schema (All Pages)
+   Why: Helps Google understand site hierarchy, improves breadcrumb in SERPs
+   
+   Add to src/components/site/SiteShell.tsx:
+   
+   <script type="application/ld+json">
+   {JSON.stringify({
+     "@context": "https://schema.org",
+     "@type": "BreadcrumbList",
+     "itemListElement": [
+       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://natureloversadventure.co.ke" },
+       { "@type": "ListItem", "position": 2, "name": "Safari Packages", "item": "https://natureloversadventure.co.ke/safari-packages" }
+     ]
+   })}
+   </script>
+
+D. FAQPage Schema (Contact + Packages Pages)
+   Why: FAQ snippets take up 3x more SERP real estate, push competitors down
+   
+   Add to src/routes/contact.tsx:
+   
+   <script type="application/ld+json">
+   {JSON.stringify({
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+       {
+         "@type": "Question",
+         "name": "What is the best time to visit Masai Mara?",
+         "acceptedAnswer": {
+           "@type": "Answer",
+           "text": "June to October (dry season) for peak wildlife viewing, but shoulder season (March-May) offers lush scenery and lower prices."
+         }
+       },
+       {
+         "@type": "Question",
+         "name": "Do I need a visa for Kenya?",
+         "acceptedAnswer": {
+           "@type": "Answer",
+           "text": "US, EU, AU citizens get visa-free entry (90 days). Others apply online (JIDA system) or on arrival."
+         }
+       },
+       {
+         "@type": "Question",
+         "name": "What is included in the Bush & Beach package?",
+         "acceptedAnswer": {
+           "@type": "Answer",
+           "text": "4 nights bush safari (Masai Mara, Amboseli), 3 nights beach resort (Mombasa), all game drives, meals, transfers."
+         }
+       }
+     ]
+   })}
+   </script>
+
+
+4. ADD CANONICAL TAGS to All Pages
+──────────────────────────────────────────────────────────────────────────────
+Add to <Head> in src/routes/__root.tsx:
+
+<link rel="canonical" href="https://natureloversadventure.co.ke/" />
+
+(TanStack Router auto-generates correct URL per route)
+
+
+5. OPTIMIZE META DESCRIPTIONS
+──────────────────────────────────────────────────────────────────────────────
+
+Current problem: Generic "Luxury African Safaris" doesn't target search queries.
+
+UPDATE src/router.tsx head() to include keyword-rich descriptions:
+
+Homepage:
+  "Premium Kenya safari packages, Masai Mara tours, Tanzania wildlife adventures—
+   booked in 60 seconds via WhatsApp. Plan your dream East African safari today."
+
+Safari Packages:
+  "Browse Kenya & Tanzania safari packages filtered by destination, duration, 
+   activity. 3-day Masai Mara to 9-day Bush & Beach combos. WhatsApp quotes instantly."
+
+Contact:
+  "Get a personalized Kenya safari quote in 24 hours. WhatsApp your travel dates, 
+   group size, budget. Experts in Masai Mara, Amboseli, Serengeti, Diani Beach."
+
+Services:
+  "Visa services, car hire, flight ticketing for Kenya safaris. Local expertise 
+   for Nairobi airport transfers, passport processing."
+
+Our Story:
+  "Nature Lovers Adventure: Nairobi-based safari operator since [YEAR]. 
+   Founders Steve, Sarah, Ian, Mary, Rushion—25+ years collective safari experience."
+
+
+6. TARGET HIGH-INTENT, HIGH-CONVERSION KEYWORDS
+──────────────────────────────────────────────────────────────────────────────
+
+Search Volume | Keyword | Current Rank | Target Rank | Strategic Action
+──────────────┼─────────┼──────────────┼─────────────┼─────────────────
+High (5000+)  | Kenya safari packages 2026 | N/A | Top 5 | Blog: "Best Kenya Safari Packages 2026"
+High (8000+)  | Masai Mara safari tour operator | N/A | Top 3 | Blog + local schema
+High (6000+)  | tours and travel Nairobi | N/A | Top 5 | Homepage title, meta desc
+Medium (2000) | car hire Nairobi airport | N/A | Top 5 | Services page optimization
+Low (300)     | passport visa services Nairobi | N/A | Top 1 | New service page (low competition!)
+Medium (1800) | Bush beach safari Kenya | N/A | Top 5 | Package-specific schema
+Medium (3000) | Amboseli vs Masai Mara | N/A | Top 5 | Blog: comparison article
+Medium (2500) | best time visit Masai Mara 2026 | N/A | Top 3 | Blog + seasonal updates
+
+STRATEGY: 5 blog articles targeting these keywords will generate 200-500 organic 
+visitors/month within 3 months (competition is thin—JohnBow and Stejos have no blog).
+
+
+7. CREATE BLOG SECTION
+──────────────────────────────────────────────────────────────────────────────
+
+Add new route: src/routes/blog/
+
+5 Priority Articles:
+1. "Best Time to Visit Masai Mara 2026" (1500 words)
+   - Peak season (June-Oct), shoulder season, rainfall, wildlife patterns
+   - Target: "best time visit masai mara"
+   - CTA: "View our June 2026 Masai Mara departures"
+
+2. "What to Pack for a Kenya Safari" (2000 words)
+   - Clothing, camera gear, medications, documents, gadgets
+   - Separate sections for dry vs. rainy season
+   - Target: "Kenya safari packing list"
+   - CTA: "Download our packing checklist + browse packages"
+
+3. "Amboseli vs Masai Mara vs Serengeti: Which Safari is Right for You?" (2500 words)
+   - Compare wildlife, landscape, best activities, price ranges
+   - Decision matrix by traveler type
+   - Target: "amboseli vs masai mara", "best safari kenya vs tanzania"
+   - CTA: "Get a personalized recommendation from Ayla"
+
+4. "Kenyan Visa & Passport Guide for International Tourists" (1800 words)
+   - Step-by-step visa application, costs by country, processing times
+   - Common mistakes, required documents
+   - Target: "Kenya visa requirements", "how to get kenya visa"
+   - CTA: "Book our visa assistance service"
+
+5. "Safari Photography Tips: Capturing the Perfect Wildlife Shot" (2000 words)
+   - Camera settings (ISO, shutter speed, aperture), lens recommendations
+   - Composition tips, ethical wildlife photography
+   - Target: "safari photography tips", "wildlife photography settings"
+   - CTA: "View galleries from our past trips + book your safari"
+
+Publishing Strategy:
+- Publish 1 article every 2 weeks (May 27, June 10, June 24, July 8, July 22)
+- Internal linking (each article links to relevant packages)
+- Schema markup (ArticleSchema on each blog post)
+- Social sharing (Twitter, LinkedIn, WhatsApp snippets)
+- Expected result: 200-400 organic visitors/month by August 2026
+
+
+8. CREATE BRANDED OPEN GRAPH IMAGE (OG Image)
+──────────────────────────────────────────────────────────────────────────────
+
+Current problem: Version 2's OG image is pulled from Google storage (unprofessional on 
+WhatsApp/Facebook).
+
+Solution:
+- Create a 1200×630px branded image featuring:
+  - Gold (#C8922A) accent color
+  - Nature Lovers Adventure logo/wordmark
+  - One cinematic wildlife shot (Masai Mara sunset or elephant)
+  - Text overlay: "Plan Your Perfect African Safari"
+- Host on Cloudinary: 
+  https://res.cloudinary.com/do5nefu0c/image/upload/og-image-1200x630.jpg
+- Add to <Head>:
+  <meta property="og:image" content="https://res.cloudinary.com/do5nefu0c/image/upload/og-image-1200x630.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:image" content="https://res.cloudinary.com/do5nefu0c/image/upload/og-image-1200x630.jpg" />
+
+Result: When shared on WhatsApp, Facebook, Twitter, image appears branded and professional.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 2: ADMIN DASHBOARD — CRITICAL (Operate Your Business)
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEM:
+You have no way to:
+- View inquiries from the contact form
+- Update package details without coding
+- Manage testimonials
+- View analytics (page views, conversions)
+- Manage team/gallery content
+- Export data to CSV for sales team
+
+SOLUTION (Priority: Implement Week 2-4):
+
+ARCHITECTURE OVERVIEW
+───────────────────────────────────────────────────────────────────────────────
+
+Route Structure:
+- /admin                    → Dashboard (if authenticated)
+- /admin/login              → Login page (email/password only)
+- /admin/inquiries          → Inquiry manager (table, filters, status updates)
+- /admin/packages           → Package CRUD
+- /admin/gallery            → Photo/video manager
+- /admin/reviews            → Testimonials manager
+- /admin/analytics          → GA4 embed, WhatsApp clicks, form submissions
+- /admin/messages           → WhatsApp template composer
+
+Authentication (Supabase):
+- Supabase Project URL: Create at https://supabase.com/dashboard
+- Service role key: Keep secret (server-side only)
+- Admin table: admin_users (email, is_active, created_at)
+- Session: httpOnly JWT cookie (NOT localStorage—prevents XSS)
+- Timeout: 4 hours, then re-authentication
+- Failed logins: Lock after 5 attempts for 30 minutes
+
+
+1. CREATE AUTHENTICATION SYSTEM
+──────────────────────────────────────────────────────────────────────────────
+
+A. Create Supabase tables:
+
+   Table: admin_users
+   ┌─────────────┬──────────┬─────────────────────┐
+   │ Column      │ Type     │ Notes               │
+   ├─────────────┼──────────┼─────────────────────┤
+   │ id          │ uuid     │ Primary key         │
+   │ email       │ text     │ Unique, indexed     │
+   │ password    │ text     │ Bcrypted (Supabase) │
+   │ is_active   │ boolean  │ Can they log in?    │
+   │ created_at  │ timestamp│ Account creation    │
+   │ last_login  │ timestamp│ Last access         │
+   │ failed_attempts │ int  │ For lockout logic   │
+   │ locked_until│ timestamp│ Lockout expires     │
+   └─────────────┴──────────┴─────────────────────┘
+
+   Seed with Steve + any co-managers:
+   - steve@natureloversadventure.co.ke
+   - [Additional managers as needed]
+
+B. Create src/routes/admin/login.tsx
+
+   Features:
+   - Email + password form (no social login, no "forgot password" link publicly visible)
+   - Error handling (invalid credentials, account locked, server error)
+   - Redirect to /admin if already authenticated
+   - Button: "Request Password Reset" (admin sends via email/WhatsApp)
+
+C. Create authentication middleware:
+
+   src/lib/auth.ts:
+   - verifyToken(jwt): Check if valid, not expired
+   - loginAdmin(email, password): Hash comparison, update last_login
+   - logoutAdmin(): Clear httpOnly cookie
+   - lockAccount(email, duration): Set locked_until timestamp
+   - checkFailedAttempts(email): Increment counter, lock if > 5
+
+D. Set httpOnly cookie on login:
+   
+   res.setHeader('Set-Cookie', `auth_token=${jwt}; HttpOnly; Secure; Path=/; Max-Age=14400`);
+   // 4 hours = 14400 seconds
+
+
+2. CREATE INQUIRIES MANAGER
+──────────────────────────────────────────────────────────────────────────────
+
+Table: inquiries
+┌──────────────┬──────────┬──────────────────────────────────┐
+│ Column       │ Type     │ Notes                            │
+├──────────────┼──────────┼──────────────────────────────────┤
+│ id           │ uuid     │ Primary key                      │
+│ name         │ text     │ Visitor name                     │
+│ email        │ text     │ Visitor email                    │
+│ phone        │ text     │ Visitor phone                    │
+│ country      │ text     │ Country of origin                │
+│ travel_dates │ daterange│ Start + end date                 │
+│ group_size   │ int      │ Number of travelers             │
+│ budget       │ text     │ "Under $5K", "$5K-10K", etc.    │
+│ interests    │ text[]   │ ["Wildlife", "Beach", "Culture"]│
+│ message      │ text     │ Special requests                 │
+│ status       │ enum     │ New / Contacted / Quoted / Booked / Closed │
+│ admin_notes  │ text     │ Internal notes (not shown to visitor) │
+│ assigned_to  │ text     │ Steve, Sarah, Ian, etc.         │
+│ created_at   │ timestamp│ Form submission time            │
+│ updated_at   │ timestamp│ Last status change              │
+└──────────────┴──────────┴──────────────────────────────────┘
+
+Dashboard Features (src/routes/admin/inquiries.tsx):
+
+A. Table View
+   - Columns: Name, Country, Travel Dates, Group Size, Budget, Status, Actions
+   - Sorting: Newest first, by status priority
+   - Search: Filter by name, email, country
+   - Pagination: 50 inquiries per page
+
+B. Filters
+   - By status (New, Contacted, Quoted, Booked, Closed)
+   - By date range (last 7/30/90 days)
+   - By assigned admin
+   - Unassigned inquiries
+
+C. Actions (per inquiry row)
+   - View full details (modal with all fields + message)
+   - Assign to admin
+   - Change status (dropdown)
+   - Add internal notes
+   - Copy email to clipboard
+   - Copy WhatsApp link (pre-filled with status + CTA)
+   - Delete (soft delete, keeps history)
+
+D. Bulk actions
+   - Select multiple inquiries
+   - Bulk assign to admin
+   - Bulk change status
+   - Bulk export to CSV (Excel format)
+
+E. CSV Export
+   - Headers: Name, Email, Phone, Country, Travel Dates, Group Size, Budget, Interests, Message, Status, Notes, Assigned To, Created At
+   - Used by sales team to follow up in CRM
+
+
+3. CREATE PACKAGE MANAGER
+──────────────────────────────────────────────────────────────────────────────
+
+Table: packages (replaces hardcoded PACKAGES array)
+┌─────────────────┬──────────┬──────────────────────────────────┐
+│ Column          │ Type     │ Notes                            │
+├─────────────────┼──────────┼──────────────────────────────────┤
+│ id              │ uuid     │ Primary key                      │
+│ title           │ text     │ Package name                     │
+│ destinations    │ text[]   │ ["Masai Mara", "Amboseli"]      │
+│ duration        │ text     │ "5N · 6D"                       │
+│ activity        │ text     │ "Game Drives"                   │
+│ themes          │ text[]   │ ["Wildlife", "Safari"]          │
+│ country         │ enum     │ Kenya / Tanzania / Both          │
+│ description     │ text     │ Rich text (up to 5000 chars)     │
+│ itinerary       │ jsonb    │ Array of day objects:            │
+│                 │          │ [{day: 1, title: "...", desc}]  │
+│ image_url       │ text     │ Unsplash or Cloudinary          │
+│ price_display   │ text     │ "Price on Request" or "$5,000"  │
+│ price_actual    │ int      │ For internal comparisons        │
+│ gallery_images  │ text[]   │ Array of Cloudinary URLs        │
+│ is_active       │ boolean  │ Show on website?                │
+│ order           │ int      │ Sort order on packages page     │
+│ created_at      │ timestamp│                                  │
+│ updated_at      │ timestamp│                                  │
+│ updated_by      │ text     │ Which admin last edited         │
+└─────────────────┴──────────┴──────────────────────────────────┘
+
+Dashboard Features (src/routes/admin/packages.tsx):
+
+A. Package List
+   - Card view or table view
+   - Sort by: date created, alphabetical, custom order
+   - Filter by: active/inactive, country, theme
+   - Quick actions: Edit, Duplicate, View on Site, Delete
+
+B. Add/Edit Package (Modal or full page)
+   - Title, Destinations (multi-select), Duration, Activity, Themes, Country
+   - Rich text editor for Description + Itinerary
+   - Image uploader (Cloudinary integration):
+     - Upload thumbnail (1600×900px, auto-crop)
+     - Upload gallery (5-20 images, drag-to-reorder)
+   - Price display (toggle between "Price on Request" vs. fixed price)
+   - Active/inactive toggle
+   - Custom order input
+   - Save & Preview button (opens package on site in new tab)
+
+C. Drag-to-reorder functionality
+   - Reorder packages via drag-and-drop
+   - Changes affect order on safari-packages.tsx page in real-time
+
+D. Bulk delete (soft delete, shows deleted packages with restore option)
+
+
+4. CREATE GALLERY MANAGER
+──────────────────────────────────────────────────────────────────────────────
+
+Table: gallery_items
+┌──────────────┬──────────┬──────────────────────────────────────┐
+│ Column       │ Type     │ Notes                                │
+├──────────────┼──────────┼──────────────────────────────────────┤
+│ id           │ uuid     │ Primary key                          │
+│ title        │ text     │ Photo/video name                    │
+│ description  │ text     │ Optional caption                    │
+│ type         │ enum     │ photo / video                       │
+│ url          │ text     │ Cloudinary URL                      │
+│ thumbnail_url│ text     │ For videos                          │
+│ destination  │ text[]   │ Tagged destinations                 │
+│ order        │ int      │ Display order                       │
+│ created_at   │ timestamp│                                      │
+└──────────────┴──────────┴──────────────────────────────────────┘
+
+Dashboard Features (src/routes/admin/gallery.tsx):
+
+A. Upload interface
+   - Drag-and-drop or click to upload photos/videos
+   - Auto-upload to Cloudinary
+   - Show upload progress
+   - Auto-generate thumbnail for videos
+
+B. Gallery grid
+   - Display all photos/videos as grid
+   - Filter by destination
+   - Sort by newest first or custom order
+   - Multi-select with bulk delete
+
+C. Item details (click image to expand)
+   - Title, description editor
+   - Destination tags (multi-select)
+   - View on Cloudinary (external link)
+   - Reorder via arrow buttons or drag-and-drop
+   - Delete button
+
+D. Reordering
+   - Drag items to new positions
+   - Or use arrow buttons (move up/down)
+   - Save button to commit changes
+
+
+5. CREATE REVIEWS/TESTIMONIALS MANAGER
+──────────────────────────────────────────────────────────────────────────────
+
+Table: testimonials
+┌──────────────┬──────────┬──────────────────────────────────┐
+│ Column       │ Type     │ Notes                            │
+├──────────────┼──────────┼──────────────────────────────────┤
+│ id           │ uuid     │ Primary key                      │
+│ name         │ text     │ Reviewer name                    │
+│ country      │ text     │ Country of origin                │
+│ photo_url    │ text     │ Cloudinary URL (optional)        │
+│ text         │ text     │ Testimonial text (up to 500 chars)│
+│ rating       │ int      │ 1-5 stars                        │
+│ package_id   │ uuid     │ Which package they booked        │
+│ date_traveled│ date     │ When they traveled               │
+│ is_featured  │ boolean  │ Show on homepage?                │
+│ order        │ int      │ Display order                    │
+│ created_at   │ timestamp│ When testimonial was added       │
+└──────────────┴──────────┴──────────────────────────────────┘
+
+Dashboard Features (src/routes/admin/reviews.tsx):
+
+A. Reviews list
+   - Table: Name, Package, Rating, Featured?, Actions
+   - Filter by featured/all
+   - Sort by newest, rating, or custom order
+
+B. Add/edit review (modal)
+   - Name, Country, Photo upload
+   - Text input (500 char limit)
+   - Star rating (1-5)
+   - Package selection (dropdown)
+   - Date traveled (date picker)
+   - Featured toggle
+   - Order input
+
+C. Bulk actions
+   - Bulk mark as featured
+   - Bulk delete
+
+
+6. CREATE ANALYTICS DASHBOARD
+──────────────────────────────────────────────────────────────────────────────
+
+Route: src/routes/admin/analytics.tsx
+
+Data to display:
+
+A. Key metrics (last 30 days)
+   - Total page views (from GA4)
+   - Unique visitors
+   - Inquiry forms submitted
+   - WhatsApp clicks (tracked via onClick event)
+   - Top 3 packages viewed
+   - Top 3 countries (source of inquiries)
+   - Conversion rate (inquiries ÷ page views)
+
+B. Traffic charts (embedded from GA4)
+   - Line chart: daily page views (30 days)
+   - Bar chart: top packages by views
+   - Pie chart: traffic by source (organic, direct, referral, WhatsApp)
+
+C. Inquiry funnel
+   - New inquiries (this week)
+   - Contacted (average response time)
+   - Quoted
+   - Booked
+   - Close rate (Booked ÷ New)
+
+D. Export reports
+   - Weekly summary (email to steve@...)
+   - Monthly PDF (inquiries + revenue if available)
+
+Implementation (without custom backend):
+- Embed Google Analytics 4 (read-only, embedded iframe)
+- Track WhatsApp clicks with onclick event listener + send to GA4
+- Store inquiry form submissions in Supabase (real-time count)
+
+
+7. CREATE MESSAGE COMPOSER (WhatsApp Templates)
+──────────────────────────────────────────────────────────────────────────────
+
+Route: src/routes/admin/messages.tsx
+
+Purpose: Draft pre-written WhatsApp messages to send to inquirers (via copy-paste).
+
+Pre-built templates:
+
+A. Welcome message (auto-send after form submission)
+   "Hi [Name]! Thanks for reaching out to Nature Lovers Adventure. 
+   Steve will personally respond within a few hours. 
+   Here's what you told us: [Budget], [Dates], [Group Size]. 
+   We're putting together something special for you! 🌍✈️"
+
+B. Quote ready
+   "Hi [Name]! Your personalized quote is ready! 
+   We've curated [Package Name] for your [Date] trip. 
+   Check your email or tap here to view: [Link]"
+
+C. Ready to book
+   "Hi [Name]! Ready to confirm your safari? 
+   Deposit: [Amount] by [Date]. 
+   Full payment 30 days before departure. 
+   Secure your spot now: [Link]"
+
+D. Follow-up (abandoned inquiry)
+   "Hi [Name]! Just checking in—do you have questions about the Masai Mara 
+   package? Happy to adjust itinerary, dates, or budget. 
+   Let's make this happen! 🦁"
+
+Features:
+- Edit template text (personalize with [Name], [Package], [Date], [Amount] placeholders)
+- Copy full text to clipboard
+- Send via WhatsApp link (pre-fills message)
+- Save custom templates
+
+Future enhancement: Integrate with WhatsApp Business API for scheduled/automated sending.
+
+
+URL STRUCTURE & SECURITY
+───────────────────────────────────────────────────────────────────────────────
+
+Admin URLs:
+- Private: /admin → Not in sitemap, not in robots.txt
+- Or explicitly disallowed in robots.txt: Disallow: /admin
+
+Why:
+1. No search engine indexing (rank dilution)
+2. No accidental disclosure of login page
+3. Less attractive to bots/attackers
+4. Admin panel is not public content
+
+Session Management:
+- httpOnly cookie (JWT, not accessible via JavaScript)
+- Secure flag (HTTPS only)
+- SameSite=Strict (CSRF protection)
+- Max-Age: 14400 (4 hours)
+- On session timeout: Redirect to /admin/login
+
+Account lockout:
+- 5 failed attempts → locked for 30 minutes
+- Log failed attempts (for security audit)
+- Notify admin of repeated failures
+
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 3: MOBILE OPTIMIZATIONS — HIGH (Premium Experience on Phones)
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEM:
+Mobile users (70%+ of traffic) miss out on premium interactions that feel native 
+and responsive. You lose conversions to friction and lack of polish.
+
+SOLUTION (Priority: Implement Week 3-4):
+
+
+A. iOS-SPECIFIC FEATURES
+───────────────────────────────────────────────────────────────────────────────
+
+1. Apple Touch Icon + Home Screen Installation
+   
+   Why: Let iPhone users "Install" your site as a home screen app (looks like 
+   a native app, opens full-screen).
+
+   Add to src/routes/__root.tsx <Head>:
+   
+   <link rel="apple-touch-icon" href="https://res.cloudinary.com/do5nefu0c/image/upload/apple-touch-icon-180x180.png" />
+   <meta name="apple-mobile-web-app-capable" content="yes" />
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+   <meta name="apple-mobile-web-app-title" content="Nature Lovers" />
+
+   User experience: 
+   - iPhone user shares your site on home screen
+   - Custom icon appears (your logo)
+   - Opens in full-screen mode (no Safari chrome)
+   - Feels like a native app
+
+
+2. Haptic Feedback on CTA Buttons (iPhone Taptic Engine)
+   
+   Why: Physical feedback makes taps feel premium and tactile.
+
+   Create src/lib/haptics.ts:
+   
+   export function triggerHaptic(type: 'light' | 'medium' | 'heavy' = 'light') {
+     if (window.navigator && (window.navigator as any).vibrate) {
+       const patterns = {
+         light: [10],
+         medium: [20],
+         heavy: [30, 10, 20],
+       };
+       (window.navigator as any).vibrate(patterns[type]);
+     }
+   }
+
+   Apply to buttons in src/components/site/CTABlock.tsx:
+   
+   <button 
+     onClick={() => {
+       triggerHaptic('medium');
+       // Open WhatsApp or inquiry form
+     }}
+     className="bg-gold hover:bg-gold/90"
+   >
+     Chat on WhatsApp
+   </button>
+
+   Effect on user: Click "Chat on WhatsApp" → feels a subtle vibration → premium sensation.
+
+
+3. Dynamic Island Notification (Simulated)
+   
+   Why: Modern iPhones have Dynamic Island (small pill-shaped notification area).
+   Simulate this with a toast notification positioned at the top.
+
+   Create src/components/site/DynamicIslandToast.tsx:
+   
+   - Position: Fixed top-center, -webkit-safe-area-inset-top padding
+   - Style: Black pill shape, white text, small
+   - Auto-hide after 3 seconds
+   - Example: When user clicks WhatsApp, show:
+     "Opening WhatsApp..."
+
+   Implementation:
+   - Use framer-motion for entrance animation (slide down from top)
+   - Fade out after 3 seconds
+   - Max width: ~350px (fit between Dynamic Island safe area)
+
+
+4. Safe Area Handling (iPhone Notch, Android Gesture Bar)
+   
+   Why: Ensure content doesn't get cut off by notch or home indicator.
+
+   Update src/styles.css:
+   
+   body {
+     padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+   }
+
+   .sticky-footer-cta {
+     padding-bottom: env(safe-area-inset-bottom);
+     /* iPhone home indicator bar adds ~34px on iPhone 13+ */
+   }
+
+   Result: CTA buttons (like "Enquire Now") don't get hidden behind home bar.
+
+
+5. Momentum Scrolling (Native iOS Feel)
+   
+   Why: iOS scroll feels elastic and smooth. Make web scroll feel native.
+
+   Add to src/styles.css:
+   
+   * {
+     -webkit-overflow-scrolling: touch;
+   }
+
+   Result: Scrolling feels like a native iOS app (fast momentum, elastic bounce).
+
+
+6. Video Autoplay on iOS Safari
+   
+   Why: iOS requires specific attributes to autoplay video.
+
+   Update src/components/site/HeroGallery.tsx:
+   
+   <video
+     autoPlay        // ← Required
+     muted           // ← Required (iOS allows autoplay only if muted)
+     playsInline     // ← Required (iOS: play inline, not fullscreen)
+     loop
+     poster={poster(video.poster)}
+     className="absolute inset-0 w-full h-full object-cover"
+   >
+     <source src={video.src} type="video/mp4" />
+   </video>
+
+   Note: Missing `playsInline` is the #1 reason videos don't work on iOS Safari.
+
+
+B. ANDROID-SPECIFIC FEATURES
+───────────────────────────────────────────────────────────────────────────────
+
+1. Web App Manifest + PWA Installation
+   
+   Why: Android Chrome offers "Install app" prompt. Site appears on home screen 
+   like a native app.
+
+   Create public/manifest.json:
+   
+   {
+     "name": "Nature Lovers Adventure",
+     "short_name": "Nature Lovers",
+     "description": "Premium East African safari and travel packages",
+     "start_url": "/",
+     "scope": "/",
+     "display": "standalone",
+     "orientation": "portrait-primary",
+     "theme_color": "#C8922A",
+     "background_color": "#1a1a1a",
+     "icons": [
+       {
+         "src": "https://res.cloudinary.com/do5nefu0c/image/upload/icon-192x192.png",
+         "sizes": "192x192",
+         "type": "image/png",
+         "purpose": "any"
+       },
+       {
+         "src": "https://res.cloudinary.com/do5nefu0c/image/upload/icon-512x512.png",
+         "sizes": "512x512",
+         "type": "image/png",
+         "purpose": "any"
+       },
+       {
+         "src": "https://res.cloudinary.com/do5nefu0c/image/upload/icon-maskable-192x192.png",
+         "sizes": "192x192",
+         "type": "image/png",
+         "purpose": "maskable"
+       }
+     ],
+     "screenshots": [
+       {
+         "src": "https://res.cloudinary.com/do5nefu0c/image/upload/screenshot-540x720.png",
+         "sizes": "540x720",
+         "type": "image/png",
+         "form_factor": "narrow"
+       }
+     ]
+   }
+
+   Add to <Head>:
+   <link rel="manifest" href="/manifest.json" />
+   <meta name="theme-color" content="#C8922A" />
+
+   User experience:
+   - Android user visits your site
+   - "Install app" prompt appears after 30 seconds
+   - User taps "Install"
+   - App appears on home screen with custom icon
+   - Opens in full-screen (no Chrome address bar)
+
+
+2. Material You Dynamic Theming
+   
+   Why: Android 12+ adapts app colors to user's wallpaper. Set your theme color 
+   to match your brand.
+
+   Already done in manifest.json above:
+   "theme_color": "#C8922A"
+
+   Also add to HTML:
+   <meta name="theme-color" content="#C8922A" />
+
+   Result: Chrome address bar & status bar turn gold (#C8922A) to match your brand.
+
+
+3. Android Back Gesture Handling
+   
+   Why: Android 13+ uses predictive back gesture. Ensure modals/menus close correctly.
+
+   Update Ayla chatbot (src/components/site/Ayla.tsx):
+   
+   useEffect(() => {
+     const handleBackPress = (e: any) => {
+       if (open) {
+         setOpen(false);
+         // Prevent default back navigation
+       }
+     };
+     window.addEventListener('popstate', handleBackPress);
+     return () => window.removeEventListener('popstate', handleBackPress);
+   }, [open]);
+
+   Also update mobile menu (Navbar):
+   - On back gesture, close menu instead of navigating back
+
+
+4. Material Ripple Effect on Tap
+   
+   Why: Android users expect ripple effect on button/card tap. Matches Android design language.
+
+   Create src/lib/ripple.tsx:
+   
+   import { useEffect, useRef } from 'react';
+   
+   export function useRipple() {
+     const ref = useRef<HTMLElement>(null);
+   
+     useEffect(() => {
+       const element = ref.current;
+       if (!element) return;
+   
+       element.addEventListener('mousedown', (e: MouseEvent) => {
+         const rect = element.getBoundingClientRect();
+         const x = e.clientX - rect.left;
+         const y = e.clientY - rect.top;
+   
+         const ripple = document.createElement('span');
+         ripple.className = 'ripple';
+         ripple.style.left = `${x}px`;
+         ripple.style.top = `${y}px`;
+         element.appendChild(ripple);
+   
+         setTimeout(() => ripple.remove(), 600);
+       });
+     }, []);
+   
+     return ref;
+   }
+
+   Add CSS to src/styles.css:
+   
+   .ripple {
+     position: absolute;
+     border-radius: 50%;
+     background: rgba(255, 255, 255, 0.6);
+     width: 20px;
+     height: 20px;
+     transform: translate(-50%, -50%);
+     animation: ripple-spread 0.6s ease-out;
+     pointer-events: none;
+   }
+   
+   @keyframes ripple-spread {
+     to {
+       width: 400px;
+       height: 400px;
+       opacity: 0;
+     }
+   }
+
+   Apply to buttons:
+   const ripple = useRipple();
+   <button ref={ripple}>Chat on WhatsApp</button>
+
+   Result: Clicking button shows radial ripple from tap point (native Android feel).
+
+
+5. Web Push Notifications (Android Chrome only)
+   
+   Why: After form submission, offer to send quote confirmation via notification.
+
+   Create notification request after form submit:
+   
+   if ('Notification' in window && Notification.permission === 'default') {
+     Notification.requestPermission().then((permission) => {
+       if (permission === 'granted') {
+         new Notification('Quote Confirmation', {
+           body: 'Your personalized safari quote is ready. Check your email!',
+           icon: 'https://res.cloudinary.com/do5nefu0c/image/upload/icon-192x192.png',
+         });
+       }
+     });
+   }
+
+   Note: iOS doesn't support Web Push notifications until iOS 16.4+, and even then 
+   it's limited. Android Chrome supports it fully.
+
+
+6. Native Share API (Android better than iOS)
+   
+   Why: Share button for packages. Android shows native share sheet more smoothly.
+
+   Create src/components/site/ShareButton.tsx:
+   
+   <button
+     onClick={async () => {
+       if (navigator.share) {
+         try {
+           await navigator.share({
+             title: package.title,
+             text: `Check out this ${package.title} safari package!`,
+             url: `${window.location.origin}/safari-packages#${package.id}`,
+           });
+         } catch (err) {
+           console.log('Share cancelled');
+         }
+       }
+     }}
+   >
+     Share Package
+   </button>
+
+   Android behavior: Opens native share sheet (WhatsApp, Telegram, etc.)
+   iOS behavior: Opens native share sheet (smoother on Android, but works on iOS too)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 4: AYLA AI TRAINING & KNOWLEDGE BASE — CRITICAL (Intelligent Assistant)
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEM:
+Ayla currently gives generic responses: "For a tailored response, please tap Enquire Now."
+
+This is a wasted opportunity. Ayla is your biggest differentiator vs. competitors. 
+When a potential customer at midnight asks "What's the best time for wildebeest migration?" 
+or "Do I need a visa for Tanzania?", Ayla should give an instant, intelligent, accurate answer.
+
+SOLUTION (Priority: Implement Week 2-3):
+
+1. CREATE AYLA KNOWLEDGE BASE (Hardcoded + Future API)
+──────────────────────────────────────────────────────────────────────────────
+
+Create src/lib/ayla-knowledge.ts with comprehensive information:
+
+```typescript
+export const AYLA_KNOWLEDGE = {
+  // ─────────────────────────────────────────────────────────
+  // PACKAGES
+  // ─────────────────────────────────────────────────────────
+  packages: {
+    "package-1": {
+      name: "6 Days Kenya Safari",
+      destinations: ["Nairobi", "Nakuru", "Masai Mara", "Aberdare NP"],
+      duration: "5 nights, 6 days",
+      priceUSD: "price on request",
+      priceKES: "price on request",
+      bestFor: "First-time safari visitors, wildlife enthusiasts",
+      highlights: [
+        "Nairobi: Welcome & cultural tour",
+        "Aberdare NP: Buffalo, leopard, tree hotel experience",
+        "Lake Nakuru: Flamingos, rhino sightings",
+        "Masai Mara: 3 days game drives (Big Five guaranteed)"
+      ],
+      itinerary: [
+        { day: 1, activity: "Nairobi arrival, orientation", meal: "B,D" },
+        { day: 2, activity: "Aberdare NP (tree hotel night)", meal: "B,L,D" },
+        { day: 3, activity: "Lake Nakuru game drive", meal: "B,L,D" },
+        { day: 4, activity: "Transfer to Masai Mara", meal: "B,L,D" },
+        { day: 5, activity: "Full day Masai Mara game drive", meal: "B,L,D" },
+        { day: 6, activity: "Final game drive, return to Nairobi", meal: "B" }
+      ],
+      included: [
+        "Airport transfers",
+        "All game drives (4x4 safari vehicle)",
+        "Professional driver/guide",
+        "Accommodation (lodge/camp)",
+        "Meals as indicated",
+        "Park entrance fees"
+      ],
+      excluded: [
+        "International flights",
+        "Visa & travel insurance",
+        "Personal expenses",
+        "Tips (recommended 10%)"
+      ],
+      seasonalConsiderations: {
+        peak: "June-Oct: Dry season, best wildlife viewing",
+        shoulder: "Mar-May, Nov: Fewer tourists, lush landscape, good game viewing",
+        offPeak: "Jan-Feb: Budget season, occasional rain"
+      }
+    },
+    // ... repeat for all 6 packages
+  },
+  
+  // ─────────────────────────────────────────────────────────
+  // DESTINATIONS
+  // ─────────────────────────────────────────────────────────
+  destinations: {
+    "masai-mara": {
+      name: "Masai Mara National Reserve",
+      country: "Kenya",
+      area: "1,510 km²",
+      bestMonths: ["June", "July", "August", "September"],
+      wildlife: [
+        "Lions (250+)", "Leopards", "Cheetahs",
+        "Zebras (millions)", "Wildebeest", "Elephants",
+        "Buffalo", "Giraffes", "Hyenas"
+      ],
+      highlights: "Great Migration (June-August), dramatic escarpments, remote camps",
+      climatePerMonth: {
+        "June": { temp: "15-22°C", rainfall: "Low", crowds: "Very High", wildlife: "Excellent" },
+        "July": { temp: "14-20°C", rainfall: "Low", crowds: "Very High", wildlife: "Excellent" },
+        "August": { temp: "15-21°C", rainfall: "Low", crowds: "High", wildlife: "Excellent" },
+        "September": { temp: "16-23°C", rainfall: "Low", crowds: "Medium", wildlife: "Good" },
+        // ... etc
+      },
+      drivingTime: {
+        "from-nairobi": "5 hours",
+        "from-amboseli": "8 hours"
+      },
+      accessibility: "Airstrip in reserve (1.5 hrs from Nairobi by plane) or 5hr drive",
+      bestFor: [
+        "First-time safari visitors",
+        "Great Migration viewing",
+        "Photography",
+        "Budget safaris (mid-range camps available)",
+        "Luxury experiences (high-end camps)"
+      ],
+      packingAdvice: [
+        "Binoculars (essential)",
+        "Camera with good zoom",
+        "Neutral colors (earth tones for game drives)",
+        "Sun protection (high UV)",
+        "Layers (early morning/evening can be cold)"
+      ],
+      visas: "US, EU, AU: 90 days visa-free. Others apply online (JIDA) or on arrival.",
+      currency: "KES (Kenyan Shilling), USD accepted",
+      language: "English, Swahili"
+    },
+    "amboseli": {
+      name: "Amboseli National Park",
+      country: "Kenya",
+      area: "392 km²",
+      bestMonths: ["January", "February", "August", "September"],
+      wildlife: [
+        "Elephants (largest concentration)",
+        "Buffalo", "Zebras", "Wildebeest",
+        "Lions", "Cheetahs", "Giraffes"
+      ],
+      highlights: "Mt. Kilimanjaro views, massive elephant herds, swamps rich in wildlife",
+      climatePerMonth: {
+        // ...
+      },
+      bestFor: [
+        "Elephant encounters",
+        "Mt. Kilimanjaro photography",
+        "Birdwatching (Amboseli has 400+ bird species)",
+        "Smaller group experience (less crowded than Mara)"
+      ]
+    },
+    // ... more destinations
+  },
+  
+  // ─────────────────────────────────────────────────────────
+  // VISA & TRAVEL REQUIREMENTS
+  // ─────────────────────────────────────────────────────────
+  visas: {
+    "USA": {
+      required: "No (90 days visa-free)",
+      process: "Passport valid 6+ months on arrival",
+      cost: "$0",
+      notes: "Land directly, no pre-arrival requirements"
+    },
+    "EU": {
+      required: "No (90 days visa-free)",
+      process: "Passport valid 6+ months",
+      cost: "$0",
+      notes: "UK, Germany, France, Italy, Spain — all visa-free"
+    },
+    "Australia": {
+      required: "No (90 days visa-free)",
+      cost: "$0"
+    },
+    "Canada": {
+      required: "No (90 days visa-free)",
+      cost: "$0"
+    },
+    "China": {
+      required: "Yes",
+      process: "E-visa via JIDA (kenya.go.ke/jida)",
+      cost: "$50 USD",
+      processing: "3-5 days",
+      validity: "Single entry, 3 months from approval"
+    },
+    "India": {
+      required: "Yes",
+      process: "E-visa or on arrival",
+      cost: "$50 USD",
+      processing: "2-3 days online or instant on arrival"
+    },
+    // ... more countries
+  },
+  
+  // ─────────────────────────────────────────────────────────
+  // PACKING ADVICE
+  // ─────────────────────────────────────────────────────────
+  packingGuide: {
+    essentials: [
+      "Passport (valid 6+ months)",
+      "Travel insurance",
+      "Malaria medication (consult doctor)",
+      "Flight/hotel confirmations",
+      "Credit card + cash (KES or USD)"
+    ],
+    clothing: {
+      colorScheme: "Earth tones: khaki, brown, olive, gray (avoid bright colors—spook wildlife)",
+      layering: [
+        "Long-sleeve shirt (sun + insect protection)",
+        "Lightweight fleece (early morning/evening chills)",
+        "Waterproof jacket (rain protection)",
+        "Wide-brim hat (sun protection)",
+        "Comfortable hiking boots (must test before trip!)",
+        "Socks (thick, for rough terrain)"
+      ],
+      evening: "Smart-casual at lodges—no flip-flops at dinner"
+    },
+    gear: [
+      "Binoculars (10x42 recommended for wildlife viewing)",
+      "Camera + telephoto lens (200mm+ for wildlife)",
+      "Spare batteries & memory cards",
+      "Tripod (for long exposures, video)",
+      "Charging cables + universal adapter (220V, Type G UK outlet)"
+    ],
+    toiletries: [
+      "High SPF sunscreen (50+, reapply hourly)",
+      "Lip balm with SPF",
+      "Insect repellent (50% DEET for mosquitoes)",
+      "Antihistamine (for insect bites)",
+      "Blister treatment (for rough safari roads)",
+      "Prescription medications (in original containers, doctor's letter helpful)"
+    ]
+  },
+  
+  // ─────────────────────────────────────────────────────────
+  // SEASONALITY & BEST TIMES
+  // ─────────────────────────────────────────────────────────
+  seasons: {
+    "dry-peak": {
+      months: ["June", "July", "August", "September"],
+      weather: "Dry, cool mornings (15-20°C), warm afternoons (25-30°C)",
+      wildlife: "Excellent (animals congregate at water sources)",
+      crowds: "Very high (peak prices)",
+      bestFor: "Great Migration, photography, guaranteed sightings",
+      prices: "High ($1,500-3,000/night mid-range, $5,000+/night luxury)",
+      booking: "Book 3-4 months in advance"
+    },
+    "shoulder": {
+      months: ["March", "April", "May", "November"],
+      weather: "Warm, occasional rain (brief afternoon showers)",
+      wildlife: "Good (still excellent game viewing)",
+      crowds: "Low-moderate",
+      bestFor: "Budget travelers, photographers (lush landscape)",
+      prices: "Medium ($800-1,500/night)",
+      booking: "Book 1-2 months ahead"
+    },
+    "off-peak": {
+      months: ["January", "February", "December"],
+      weather: "Hot, dry to occasionally rainy",
+      wildlife: "Fair (more dispersed)",
+      crowds: "Low",
+      bestFor: "Budget conscious, avoiding tourists, intimate experience",
+      prices: "Budget ($400-800/night)",
+      booking: "Can often book 2-3 weeks ahead"
+    }
+  },
+  
+  // ─────────────────────────────────────────────────────────
+  // FAQ
+  // ─────────────────────────────────────────────────────────
+  faq: [
+    {
+      question: "What is the Great Migration?",
+      answer: "The Great Migration is the annual movement of 2+ million wildebeest, zebras, and gazelles between the Serengeti (Tanzania) and Masai Mara (Kenya). June-August in Mara, December-May in Serengeti. Predator interactions create dramatic wildlife events."
+    },
+    {
+      question: "Is malaria a risk? Do I need medication?",
+      answer: "Yes, malaria is present in Kenya/Tanzania, especially in low-altitude areas. Consult your doctor 4-6 weeks before travel. Recommended medications: atovaquone-proguanil (Malarone), doxycycline, or mefloquine. Also use insect repellent (DEET 50%), wear long sleeves at dusk/dawn."
+    },
+    {
+      question: "Can I see the Big Five on one safari?",
+      answer: "Masai Mara has the highest concentration: lion, leopard, elephant, buffalo, rhino (all 5 commonly spotted). Amboseli has 4 of 5 (rhino rare). Guarantee: impossible, but odds are 70-90% in peak season."
+    },
+    {
+      question: "What should I bring to stay safe during game drives?",
+      answer: "Stay in vehicle except at designated stops. Never approach animals. Follow guide instructions. Bring binoculars (don't need to get closer). Use neutral clothing (avoid bright colors). Sun protection. Hydration. Never feed animals."
+    },
+    {
+      question: "How far in advance should I book?",
+      answer: "Peak season (June-Sept): 3-4 months. Shoulder (Mar-May, Nov): 1-2 months. Off-peak: 2-3 weeks. Earlier booking = better rates + guaranteed space."
+    }
+  ],
+  
+  // ─────────────────────────────────────────────────────────
+  // COMPANY INFO
+  // ─────────────────────────────────────────────────────────
+  company: {
+    name: "Nature Lovers Adventure",
+    founded: 2020,
+    headquarters: "Nairobi, Kenya",
+    specializations: [
+      "Luxury safari packages",
+      "Budget-friendly tours",
+      "Photography safaris",
+      "Family packages",
+      "Corporate incentive trips"
+    ],
+    certifications: [
+      "Kenya Tourism Board registered",
+      "Licensed tour operator",
+      "Travel insurance partners"
+    ],
+    team: [
+      { name: "Steve", role: "Founder & Safari Expert", expertise: "20+ years bush experience" },
+      { name: "Sarah", role: "Tour Operations", expertise: "Logistics, itinerary design" },
+      { name: "Ian", role: "Photography Guide", expertise: "Wildlife photography" },
+      { name: "Mary", role: "Customer Experience", expertise: "Personalized bookings" },
+      { name: "Rushion", role: "Ground Logistics", expertise: "Vehicles, camps, local contacts" }
+    ]
+  }
+};
+```
+
+2. IMPLEMENT AYLA INTELLIGENCE LAYER
+──────────────────────────────────────────────────────────────────────────────
+
+Update src/components/site/Ayla.tsx to recognize user intent and respond with relevant knowledge:
+
+```typescript
+import { AYLA_KNOWLEDGE } from '@/lib/ayla-knowledge';
+
+type MessageRole = 'ayla' | 'user';
+
+interface Message {
+  role: MessageRole;
+  text: string;
+}
+
+const GREETING = `Hi, I'm Ayla ✦ — your personal safari guide at Nature Lovers Adventure. 
+I can help you with:
+• Package recommendations based on your budget & dates
+• Best time to visit any destination
+• Visa requirements & travel tips
+• What to pack for your safari
+• Wildlife & nature facts
+• Custom itinerary suggestions
+
+Ask me anything! Example: "Best time for Masai Mara?" or "What do I need for a Tanzania visa?"`;
+
+function generateAylaResponse(userMessage: string): string {
+  const msg = userMessage.toLowerCase();
+  
+  // ─────────────────────────────────────────────────────────
+  // INTENT: Best time to visit destination
+  // ─────────────────────────────────────────────────────────
+  if (msg.includes('best time') || msg.includes('when to go') || msg.includes('season')) {
+    if (msg.includes('masai mara')) {
+      const dest = AYLA_KNOWLEDGE.destinations['masai-mara'];
+      return `The best time to visit ${dest.name} is ${dest.bestMonths.join(', ')}. 
+      
+During this time:
+• Wildlife viewing: Excellent (Great Migration in June-August)
+• Weather: Dry and cool (15-22°C mornings, 25-30°C afternoons)
+• Crowds: Very high (book 3-4 months ahead)
+
+Shoulder season (March-May, September-November) offers fewer tourists, lush scenery, and still excellent wildlife viewing at lower prices.
+
+Ready to book? I recommend our "6 Days Kenya Safari" or our custom packages.`;
+    }
+    if (msg.includes('amboseli')) {
+      const dest = AYLA_KNOWLEDGE.destinations['amboseli'];
+      return `${dest.name} is best visited in ${dest.bestMonths.join(', ')}.
+
+Best for: Elephant encounters, Mt. Kilimanjaro photography, and birdwatching (400+ species!).
+
+Our "Magical Kenya 6 Days" package includes 2 nights in Amboseli. Interested?`;
+    }
+    // Fallback for other destinations
+    return `Different destinations have different peak seasons. Could you tell me which destination interests you most—Masai Mara, Amboseli, Serengeti, or a combination?`;
+  }
+  
+  // ─────────────────────────────────────────────────────────
+  // INTENT: Visa & travel requirements
+  // ─────────────────────────────────────────────────────────
+  if (msg.includes('visa') || msg.includes('passport') || msg.includes('travel requirements')) {
+    if (msg.includes('usa') || msg.includes('american') || msg.includes('us')) {
+      return `Great news! US citizens get 90 days visa-free entry to Kenya. 
+      
+Just need:
+✓ Passport valid for 6+ months
+✓ Onward ticket
+✓ Travel insurance (recommended)
+
+No visa application needed—land directly! However, you may need a Tanzania visa if visiting Serengeti. Our team can advise on visa options when you inquire.`;
+    }
+    if (msg.includes('china') || msg.includes('india') || msg.includes('visa required')) {
+      return `Citizens of China, India, and most other countries need a Kenya visa.
+
+Options:
+1. E-visa ($50) via JIDA (kenya.go.ke/jida) — 3-5 days processing
+2. Visa on arrival — instant but bring USD cash
+
+Either way, your passport must be valid 6+ months. Want our team to guide you through the process? We handle visa consultations for our guests.`;
+    }
+    // Fallback
+    return `Most tourists can enter Kenya visa-free or get a tourist visa easily. What's your country of origin? I can give you specific details.`;
+  }
+  
+  // ─────────────────────────────────────────────────────────
+  // INTENT: Packing advice
+  // ─────────────────────────────────────────────────────────
+  if (msg.includes('pack') || msg.includes('what to bring') || msg.includes('luggage')) {
+    return `Packing for a safari? Here's the essentials:
+
+🎒 Must-haves:
+• Neutral colors (khaki, brown, olive—avoid bright colors, they spook animals!)
+• Sturdy hiking boots (test before trip!)
+• Sun protection (SPF 50+, hat, sunglasses)
+• Binoculars (10x42 recommended)
+• Camera + extra batteries
+• Lightweight layers (early mornings are chilly)
+
+💊 Medical:
+• Malaria medication (consult doctor 4-6 weeks before)
+• Insect repellent (50% DEET)
+• Antihistamines, blister treatment
+
+📖 Documents:
+• Passport (valid 6+ months)
+• Travel insurance
+• Flight confirmations
+
+Pro tip: Avoid overpacking—you don't need much! Lodges provide basics, and you'll want luggage space for souvenirs. What duration safari are you planning?`;
+  }
+  
+  // ─────────────────────────────────────────────────────────
+  // INTENT: Wildlife & facts
+  // ─────────────────────────────────────────────────────────
+  if (msg.includes('big five') || msg.includes('wildlife') || msg.includes('animals')) {
+    if (msg.includes('big five')) {
+      return `The Big Five are:
+🦁 Lion — Africa's apex predator
+🐘 Elephant — Largest land mammal
+🦁 Leopard — Elusive and beautiful
+🦬 Buffalo — Unpredictable and dangerous
+🦏 Rhino — Critically endangered
+
+Masai Mara offers the BEST chances to see all 5 in one safari (70-90% sighting rate in peak season). Amboseli has 4 of 5 (rhinos are rare).
+
+Our guests often see 4+ of the Big Five in one trip!`;
+    }
+    if (msg.includes('leopard') || msg.includes('cheetah')) {
+      return `Great question! Leopards are incredibly elusive (spotted in ~40% of safaris), while cheetahs are more active and visible (especially in Masai Mara).
+
+The difference: Leopards hunt at dusk/dawn and hide in trees. Cheetahs hunt during day in open areas.
+
+Your best chance: Early morning & late afternoon game drives with an expert guide like our team.`;
+    }
+    // General wildlife
+    return `Kenya & Tanzania are home to 700+ wildlife species! Which animals interest you most? Lions, elephants, giraffes, zebras, hyenas, birds?`;
+  }
+  
+  // ─────────────────────────────────────────────────────────
+  // INTENT: Package recommendations
+  // ─────────────────────────────────────────────────────────
+  if (msg.includes('recommend') || msg.includes('which package') || msg.includes('budget')) {
+    let recommendation = "To give you the perfect recommendation, I need to know:\n\n";
+    recommendation += "1. What's your budget per person? (e.g., $2K, $5K, $10K)\n";
+    recommendation += "2. How many days do you have? (3, 5, 7, 10 days?)\n";
+    recommendation += "3. What interests you? (Big Five, beaches, migration, photography?)\n";
+    recommendation += "4. When are you planning to travel?\n\n";
+    recommendation += "Once you share these, I'll match you with the perfect package!";
+    return recommendation;
+  }
+  
+  // ─────────────────────────────────────────────────────────
+  // INTENT: Booking & next steps
+  // ─────────────────────────────────────────────────────────
+  if (msg.includes('book') || msg.includes('reserve') || msg.includes('inquire') || msg.includes('quote')) {
+    return `Ready to book your safari? 🎉
+
+Click the "Enquire Now" button to submit your details:
+✓ Your name & email
+✓ Travel dates
+✓ Group size
+✓ Budget
+✓ Special requests
+
+Steve will personally respond within 24 hours with a customized quote!
+
+Alternatively, chat with us directly on WhatsApp: wa.me/254724660170`;
+  }
+  
+  // ─────────────────────────────────────────────────────────
+  // FALLBACK: Generic helpful response
+  // ─────────────────────────────────────────────────────────
+  return `Great question! I'm here to help with:
+• Package recommendations
+• Best times to visit
+• Visa & travel requirements
+• Packing tips
+• Wildlife facts
+
+For specific details about your safari, I'd love to know:
+- Your budget
+- Travel dates
+- What you want to see
+
+Or simply tap "Enquire Now" to get a personalized quote from our team! 🦁`;
+}
+
+export function Ayla() {
+  // ... [existing code]
+  
+  const send = () => {
+    const text = input.trim();
+    if (!text) return;
+    
+    setMessages((m) => [...m, { role: 'user', text }]);
+    setInput('');
+    
+    // Simulate typing delay (200-500ms)
+    setTimeout(() => {
+      const response = generateAylaResponse(text);
+      setMessages((m) => [...m, { role: 'ayla', text: response }]);
+    }, Math.random() * 300 + 200);
+  };
+  
+  // ... [rest of component]
+}
+```
+
+3. FUTURE: CONNECT TO REAL AI BACKEND
+──────────────────────────────────────────────────────────────────────────────
+
+Once hardcoded knowledge is working, integrate with an LLM API (Claude, GPT-4, Gemini):
+
+```typescript
+async function generateAylaResponseFromLLM(userMessage: string): Promise<string> {
+  const systemPrompt = `You are Ayla ✦, a friendly safari guide for Nature Lovers Adventure 
+  (Nairobi, Kenya). You specialize in East African safaris, packages, travel tips.
+  
+  Knowledge base: ${JSON.stringify(AYLA_KNOWLEDGE)}
+  
+  Your tone: Expert but warm, concise, and action-oriented. End responses with a CTA 
+  (suggest a package, ask for clarification, or prompt "Enquire Now").
+  
+  Never make up package prices. Always say "Price on Request" unless specified.
+  Stick to verified facts from the knowledge base.`;
+  
+  const response = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': process.env.ANTHROPIC_API_KEY,
+    },
+    body: JSON.stringify({
+      model: 'claude-3-5-sonnet-20241022',
+      max_tokens: 300,
+      system: systemPrompt,
+      messages: [
+        {
+          role: 'user',
+          content: userMessage,
+        },
+      ],
+    }),
+  });
+  
+  const data = await response.json();
+  return data.content[0].text;
+}
+```
+
+4. ANALYTICS: TRACK AYLA CONVERSATIONS
+──────────────────────────────────────────────────────────────────────────────
+
+Track which questions users ask (to improve knowledge base):
+
+```typescript
+function trackAylaConversation(userMessage: string, aylaResponse: string) {
+  // Send to PostHog or custom analytics
+  // Use to identify gaps in knowledge base
+}
+```
+
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 5: COMPETITIVE DIFFERENTIATION & UNIQUE FEATURES
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEM:
+JohnBow Tours and Stejos Tours both serve the same market. To compete, you need:
+1. Clear differentiation (why choose Nature Lovers over them?)
+2. Features competitors can't match
+3. Multiple traffic sources (not just direct)
+
+ANALYSIS OF COMPETITORS
+───────────────────────────────────────────────────────────────────────────────
+
+JohnBow Tours (johnbowtoursandtravel.com):
+Strengths:
+  • 15+ years in market, established brand
+  • Premium positioning (boutique luxury)
+  • Strong photography (cinematic)
+  • Email list / existing customer base
+  
+Weaknesses:
+  • NO AI layer (Ayla is your advantage!)
+  • NO video content beyond hero (you have 8 cinematic videos!)
+  • NO blog (zero organic traffic)
+  • NO team storytelling (impersonal)
+  • NO gallery page
+  • Static design (functional but not emotional)
+
+Stejos Tours (stejostours.com):
+Strengths:
+  • Full-service travel agency (flights, hotels, car hire)
+  • 9 package categories + themed packages
+  • Resident vs. non-resident pricing (local market expertise)
+  • Mega navigation menu (all destinations in one place)
+  • Established brand
+  
+Weaknesses:
+  • Functional design, not premium/emotional
+  • NO AI assistance
+  • No dedicated gallery (just package images)
+  • No team/personal connection
+  • No blog
+  • Doesn't serve niche markets well
+
+YOUR COMPETITIVE ADVANTAGES
+───────────────────────────────────────────────────────────────────────────────
+
+1. ✦ AYLA AI CHATBOT (Unique to Nature Lovers)
+   Why: JohnBow and Stejos have NO AI. Ayla is your biggest differentiator.
+   • Instant answers to travel questions (24/7)
+   • Package recommendations based on preferences
+   • Visa & packing guidance
+   • Eliminates friction (no "email for details")
+   • Leads to higher conversion rate
+   
+   Action: Train Ayla thoroughly (see Section 4). Promote it as a feature 
+   ("Chat with Ayla for instant safari advice").
+
+2. 🎬 CINEMATIC VIDEO CONTENT (Rare in East Africa)
+   Why: Videos trigger emotion and memory. Static photos don't.
+   • 8 hero videos (Mara, Amboseli, beach, giraffes, lions, travel, flights)
+   • 1.5x+ better engagement than static images
+   • Visitors spend 2+ minutes watching (increases brand affinity)
+   • Competitors use galleries—you have dynamic storytelling
+   
+   Action: Add more behind-the-scenes videos (team bios, customer testimonials in video format).
+
+3. 👥 TEAM STORYTELLING (Human Connection)
+   Why: Family business differentiation. Customers book from people, not websites.
+   • Your story: Steve (founder), Sarah, Ian, Mary, Rushion
+   • 25+ years collective experience
+   • Personal team bios with photos, expertise, personal message
+   • "Meet the team that knows every zebra in the Mara"
+   
+   Action: Create dedicated team page with video bios (60 seconds each, in beautiful setting).
+
+4. 📝 BLOG & SEO (Organic Traffic Funnel)
+   Why: Neither JohnBow nor Stejos have blogs. You can dominate informational queries.
+   • "Best time to visit Masai Mara" → ranks #1 → clicks to your blog → CTA to packages
+   • "Kenya safari packing list" → high volume, easy to rank
+   • "Amboseli vs Masai Mara" → decision-making content → drives conversions
+   
+   Action: Publish 5 articles ASAP (see Section 1 for details).
+
+5. 📸 DEDICATED GALLERY PAGE (Filterable)
+   Why: Visitors who spend time in galleries have higher booking intent.
+   • Filter by destination, activity, season
+   • Real customer photos (testimonials in visual form)
+   • Behind-the-scenes team content
+   • Builds trust (social proof)
+   
+   Action: Create src/routes/gallery.tsx with filterable grid.
+
+6. 🏠 RESIDENTS MARKET (Stejos Does This, You Don't)
+   Why: Kenyans (KES pricing) are 30-40% of market. Stejos captures this via pricing segmentation.
+   • Create "Residents Special" section (KES pricing lower than USD)
+   • Local weekend getaways (Hell's Gate, Nairobi NP, Lake Naivasha)
+   • Seasonal local holidays (Madaraka Day, Labor Day, Easter packages)
+   
+   Action: Add src/routes/residents.tsx with KES pricing & weekend options.
+
+7. ⚡ WHATSAPP INSTANT RESPONSE
+   Why: No competitor integrates WhatsApp this tightly.
+   • Every page has WhatsApp CTA (not buried in footer)
+   • After form submission: Auto-send WhatsApp (via your API) with quote/status
+   • Live WhatsApp group for package updates
+   • Fastest response time in market = more conversions
+   
+   Action: Implement WhatsApp Business API for automated messages.
+
+8. 🎨 PREMIUM BRAND DESIGN (V2 Already Wins on This)
+   • Gold + charcoal color scheme (more luxury than competitors' blues/greens)
+   • Serif typography (editorial, timeless)
+   • Bento grid of videos (not just carousel)
+   • Custom animations (Framer Motion, not default)
+   • Mobile-first (competitors are desktop-first)
+   
+   Action: Emphasize design in marketing ("Luxury meets technology").
+
+9. 🔐 SECURE ADMIN DASHBOARD (Future Advantage)
+   Why: You'll have data + insights that competitors don't.
+   • Real-time inquiry tracking
+   • Package performance analytics
+   • Customer conversion funnel
+   • Team productivity metrics
+   
+   Action: Complete admin dashboard (Section 2) before launching to market.
+
+10. 🌍 MULTI-MARKET EXPANSION (Hidden Advantage)
+    Why: Your tech stack allows easy expansion to Tanzania, Uganda, Rwanda.
+    • Current focus: Kenya (Masai Mara, Amboseli, Diani)
+    • Next: Tanzania (Serengeti, Zanzibar)
+    • Then: Uganda (Bwindi), Rwanda (Volcanoes, Kigali)
+    • Competitors are geographically stuck
+    
+    Action: Plan for regional expansion Q4 2026.
+
+
+HOW TO POSITION NATURE LOVERS AS #1 CHOICE
+───────────────────────────────────────────────────────────────────────────────
+
+Current message (what you have):
+"Luxury African safaris. Curated experiences."
+
+Better message (what to say):
+"The only safari operator with an AI guide that answers your questions 24/7. 
+Cinematic video experiences. Book in 60 seconds via WhatsApp."
+
+Marketing tagline:
+"Safari Reimagined: Ayla AI + Cinematic Journeys + WhatsApp Booking"
+
+Positioning statement (for investors/partners):
+"Nature Lovers Adventure is an East African premium safari operator blending 
+luxury with technology. Our differentiators: (1) Ayla AI chatbot (real-time guidance), 
+(2) cinematic video content (emotional engagement), (3) WhatsApp-first booking 
+(30% faster conversion than forms), (4) organic SEO traffic (blog strategy). 
+We're capturing market share from older players (JohnBow, Stejos) via speed and 
+personalization."
+
+
+HOW TO SURPASS JOHNBOW SPECIFICALLY
+───────────────────────────────────────────────────────────────────────────────
+
+JohnBow's advantages: Established, luxury positioning, great photography.
+Your advantages: Speed, AI, modern design, tech-first, youth market.
+
+1. Speed: You respond faster (Ayla instant, WhatsApp instant)
+   → JohnBow: "We'll get back to you within 24 hours"
+   → You: "Ayla responds in seconds, Steve follows up in hours"
+
+2. Personalization: Ayla learns preferences, recommends packages
+   → JohnBow: Generic email responses ("Choose from these 6 packages")
+   → You: "Based on your June dates and $5K budget, here's what I recommend"
+
+3. No friction: No forms, no delays
+   → JohnBow: Multi-step form + wait for email
+   → You: Chat with Ayla → "Enquire Now" → WhatsApp message
+
+4. Content marketing: Blog outranks them on Google
+   → JohnBow has 0 blog articles ranking
+   → You'll have 5 articles ranking in months 1-3
+
+5. Video engagement: Your hero carousel keeps visitors longer
+   → JohnBow: Static hero image
+   → You: 8 videos, auto-loop, 2+ min viewer engagement
+
+6. Youth market: Design + AI + speed appeal to 25-40 demographic
+   → JohnBow: Positioned for 45+ "established" travelers
+   → You: "Modern safari operator for modern travelers"
+
+Action plan:
+- Week 1: Promote Ayla as unique feature on homepage ("Chat with Ayla ✦")
+- Week 2: Publish first blog article (Great Migration)
+- Week 3: Launch team video bios
+- Week 4: Add WhatsApp notification after form submission
+
+
+HOW TO SURPASS STEJOS SPECIFICALLY
+───────────────────────────────────────────────────────────────────────────────
+
+Stejos' advantages: Full travel agency, many destinations, residents pricing.
+Your advantages: Design, AI, emotional connection, tech.
+
+1. Better design: Your brand is premium, Stejos is functional
+   → Stejos: Bright, cluttered, utilitarian
+   → You: Gold, charcoal, cinematic, luxury feel
+
+2. Emotional connection: Stejos has no team story
+   → Stejos: "Book with us" (impersonal)
+   → You: "Meet Steve, our founder with 20+ years in the bush"
+
+3. Ayla advantage: Stejos has no AI
+   → Stejos: Search their site for "Kenya safari packing" → 0 results
+   → You: Ask Ayla "What should I pack?" → detailed answer in seconds
+
+4. Video content: Stejos has no videos
+   → Stejos: Static gallery
+   → You: Cinematic video experiences
+
+5. Blog/SEO: Stejos has no blog
+   → Stejos: 0 organic search traffic
+   → You: 200-500 organic visitors/month within 3 months
+
+6. Mobile experience: Your site is prettier on mobile
+   → Stejos: Desktop-optimized, clunky on phone
+   → You: Mobile-first design, PWA installation option
+
+Action plan:
+- Week 1: Add residents pricing & local holiday packages (copy Stejos strategy)
+- Week 2: Add "Hidden Gems" section (local day trips: Hell's Gate, Nairobi NP, Naivasha)
+- Week 3: Launch car hire service (owned booking link or partner)
+- Week 4: Integrate flight booking (partner with local travel agencies or flight search API)
+
+Note: Don't try to be Stejos (full travel agency). Stay focused on your core 
+(premium safaris) but offer complementary services (car hire, flights, visas).
+
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 6: ADDITIONAL UNIQUE FEATURES & IMPROVEMENTS
+═══════════════════════════════════════════════════════════════════════════════
+
+Beyond Section 5's competitive advantages, here are additional features 
+that will make your site remarkable:
+
+1. INTERACTIVE "BEST TIME TO VISIT" CALENDAR
+──────────────────────────────────────────────────────────────────────────────
+
+What it is: A 12-month calendar strip showing seasonal data for each destination.
+
+Where: Above the packages grid on safari-packages.tsx
+
+Visual:
+┌─────────────────────────────────────────────────────────────────────┐
+│ Best Time to Visit Masai Mara                                       │
+├─────────────────────────────────────────────────────────────────────┤
+│ [Jan] [Feb] [Mar] [Apr] [May] [Jun] [Jul] [Aug] [Sep] [Oct] [Nov] [Dec] │
+│   🟡   🟡   🟢   🟢   🟢   🟢   🟢   🟢   🟢   🟢   🟡   🟡   │
+│                                                                     │
+│ Hover over month for details:                                       │
+│ Jun: Peak season (25°C, dry, Big Five ✓, crowds ✓✓✓)              │
+└─────────────────────────────────────────────────────────────────────┘
+
+Color legend:
+🟡 Off-peak (budget prices, fewer animals)
+🟢 Peak (best wildlife, higher prices)
+🟠 Shoulder (sweet spot: good wildlife, lower prices)
+
+Functionality:
+- Destination selector (dropdown: Masai Mara, Amboseli, Serengeti)
+- Click month → highlights best packages for that time
+- Tooltip on hover → temperature, rainfall, wildlife, crowds, price level
+
+Benefit: Users instantly know "June is too crowded/expensive, let me look at May or September instead."
+This improves conversion because visitors match travel dates to realistic packages.
+
+Implementation: React state + Framer Motion for smooth transitions.
+
+
+2. CUSTOMER TESTIMONIAL VIDEO CAROUSEL
+──────────────────────────────────────────────────────────────────────────────
+
+What it is: 1-2 minute video testimonials from past customers.
+
+Where: Homepage, below hero videos
+
+Videos to create:
+• "Why I chose Nature Lovers" (1.5 min, customer perspective)
+• "Best Masai Mara experience ever" (1.5 min, Big Five encounter)
+• "Ayla helped me plan my trip" (1 min, AI endorsement)
+• "Team expertise was incredible" (1.5 min, Steve/guide testimonial)
+
+Format:
+- Shot on phone or professional camera
+- Natural speaking (not scripted sounding)
+- Real locations (on safari, in lodge, at office)
+- Captions with key quotes
+- End CTA: "Ready for your adventure? Chat with Ayla or WhatsApp us"
+
+Benefit: Video testimonials are 75% more believable than written reviews.
+
+
+3. DOWNLOADABLE GUIDES & RESOURCES
+──────────────────────────────────────────────────────────────────────────────
+
+Create downloadable PDFs for email list building:
+
+A. "Kenya Safari Packing Checklist" (2 pages, PDF)
+   • Interactive PDF (use Adobe or Canva)
+   • Email capture: "Enter your email to download"
+   • Builds email list + delivers value
+
+B. "Seasonal Wildlife Migration Calendar 2026" (1 page)
+   • Month-by-month guide
+   • Free download
+
+C. "Photography Tips for Safari" (5 pages)
+   • Camera settings
+   • Composition tips
+   • Subject guides
+   • Email-gated
+
+Benefit: Builds email list for future marketing. Each download = qualified lead.
+
+
+4. LIVE CHAT WIDGET (Not Just Chatbot)
+──────────────────────────────────────────────────────────────────────────────
+
+Upgrade Ayla to support human handoff:
+
+Flow:
+User → Ayla (AI) → "I'd like to talk to a human" → Steve on WhatsApp (live)
+
+Implementation:
+- Ayla detects handoff requests
+- Shows Steve's WhatsApp link
+- Or: Embed Tawk.io (free live chat) for synchronous support
+
+Benefit: Users who need human touch get it without leaving site.
+
+
+5. PACKAGE COMPARISON TOOL
+──────────────────────────────────────────────────────────────────────────────
+
+What it is: Side-by-side package comparison (like flight comparison sites).
+
+Where: safari-packages.tsx
+
+Feature:
+- Select 2-3 packages (checkboxes)
+- Click "Compare"
+- Modal opens showing:
+  | Criteria | Package A | Package B | Package C |
+  |----------|-----------|-----------|-----------|
+  | Price | On Request | On Request | On Request |
+  | Duration | 5N · 6D | 7N · 8D | 8N · 9D |
+  | Destinations | 5 | 4 | 6 |
+  | Highlights | ... | ... | ... |
+  | Best for | ... | ... | ... |
+  | CTA | Book | Book | Book |
+
+Benefit: Helps indecisive customers make decisions faster. Increases conversions.
+
+
+6. REVIEWS AGGREGATOR (Google, Trustpilot, TripAdvisor)
+──────────────────────────────────────────────────────────────────────────────
+
+Display your reviews from multiple sources in one place:
+
+Widget on homepage:
+"⭐ 4.9 / 5.0 based on 127 reviews"
+├── Google: ⭐⭐⭐⭐⭐ (50 reviews)
+├── Trustpilot: ⭐⭐⭐⭐⭐ (45 reviews)
+├── TripAdvisor: ⭐⭐⭐⭐ (32 reviews)
+
+Implementation:
+- Use review APIs (Google, Trustpilot) to fetch reviews
+- Display as rotating carousel or widget
+- Real social proof
+
+Benefit: High conversion factor. "127 reviews" is trust signal.
+
+
+7. CUSTOM ITINERARY BUILDER
+──────────────────────────────────────────────────────────────────────────────
+
+Interactive tool: Users customize package on the fly.
+
+Flow:
+1. Start with template (e.g., "6 Days Kenya Safari")
+2. Adjust:
+   - Add days (+1 night = add cost)
+   - Change destinations (drag-drop)
+   - Add activities (cooking class, Maasai village visit)
+   - Set budget slider
+3. Real-time price calculation
+4. "Get Quote" button → sends custom itinerary to Steve
+
+Benefit: Users feel ownership of the package. Higher conversion for custom bookings.
+
+
+8. LOYALTY PROGRAM / REFERRAL BONUS
+──────────────────────────────────────────────────────────────────────────────
+
+Create "Safari Club":
+- Customers who book once earn 10% credit for next trip
+- Refer a friend → $100 credit when they book
+- Return customer: 15% discount on next package
+
+Messaging: "Book your first safari. Return customers get 15% off."
+
+Benefit: Increases LTV (lifetime value) and word-of-mouth.
+
+
+9. SEASONAL PROMOTIONS & FLASH DEALS
+──────────────────────────────────────────────────────────────────────────────
+
+Create urgency:
+- "Early Booking Bonus: Book by [date] for 20% off June departures"
+- "Shoulder Season Steal: $1,200/night in May (normally $1,800)"
+- "Flash Sale: Masai Mara 3-day safari, 50% off"
+
+Where to display:
+- Homepage banner
+- Email newsletter
+- Ayla chatbot
+- WhatsApp status updates
+
+Benefit: Drives bookings during slower seasons.
+
+
+10. VIRTUAL TOUR / 360 PHOTO GALLERY
+─────────────────────────────────────────────────────────────────────────────
+
+Use 360 photography or video tours:
+- Virtual lodge room tour ("See where you'll stay")
+- Game drive route visualization (Google Earth 3D path)
+- Destination 360 photos (pan around Masai Mara)
+
+Tools: Panellum (open-source 360 viewer) or Matterport.
+
+Benefit: Reduces buyer's remorse. Customers know exactly what they're booking.
+
+
+11. PODCAST / BEHIND-THE-SCENES CONTENT
+──────────────────────────────────────────────────────────────────────────────
+
+Create audio content:
+- "Safari Stories" podcast (20 min episodes)
+- Steve telling safari stories (encounters, tips, history)
+- Guest interviews (other guides, photographers, conservationists)
+- Publish on Spotify, Apple Podcasts
+
+Benefit: New traffic channel. Builds deeper brand connection.
+
+
+12. AMBASSADOR / INFLUENCER PROGRAM
+──────────────────────────────────────────────────────────────────────────────
+
+Partner with micro-influencers (10K-100K followers) in travel/photography:
+- Sponsored trip (give them free package in exchange for content)
+- They create content (Instagram, TikTok, blog posts)
+- You get authentic testimonials + traffic
+
+Benefit: Reach new audiences. Cost: 1 free package (~$3K value) can generate 
+10K+ social impressions.
+
+
+═══════════════════════════════════════════════════════════════════════════════
+IMPLEMENTATION PRIORITY & TIMELINE
+═══════════════════════════════════════════════════════════════════════════════
+
+CRITICAL (Do First):
+✓ SEO Infrastructure (sitemap, robots.txt, JSON-LD, meta descriptions) — 1 week
+✓ Ayla Knowledge Base training — 1 week
+✓ Admin Dashboard (inquiries, packages, analytics) — 2 weeks
+□ Blog launch (5 articles) — 2 weeks
+□ Mobile optimizations (iOS, Android) — 1 week
+
+HIGH (Do Next):
+□ Competitive differentiation strategy — implement — 1 week
+□ Team video bios — 1 week
+□ Gallery page (filterable) — 1 week
+□ Residents market (KES pricing, local packages) — 1 week
+
+MEDIUM (Do Later):
+□ Seasonal calendar widget — 1 week
+□ Video testimonials — 2 weeks
+□ Downloadable guides — 1 week
+□ Package comparison tool — 1 week
+□ Reviews aggregator — 1 week
+□ Itinerary builder — 2 weeks
+□ Loyalty program — 1 week
+□ Flash deals / promotions — ongoing
+□ 360 virtual tours — 2 weeks
+□ Podcast series — ongoing (1 episode/week)
+□ Ambassador program — ongoing
+
+LOW (Nice to Have):
+□ Live chat widget integration — 1 week
+□ Notification system — 1 week
+□ Multi-language support — 2 weeks
+
+TOTAL TIME TO EXCELLENCE: 10-12 weeks (all critical + high + selected medium items)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+SUCCESS METRICS
+═══════════════════════════════════════════════════════════════════════════════
+
+Track these to measure improvement:
+
+Traffic:
+- Monthly visitors (current: estimate 500-1K)
+- Target after improvements: 3,000-5,000/month (blog + SEO)
+- Organic traffic (SEO): 0 → 500-800/month
+
+Conversion:
+- Inquiry form submissions: Current rate X%
+- Target: 2-3x increase (from mobile + mobile + Ayla friction reduction)
+- Average booking value: Current $X
+- Target: +20% (higher-quality customers from blog)
+
+Engagement:
+- Average session duration: Current X min
+- Target: 3-5 min (blog + video content)
+- Pages per session: Current X
+- Target: 3+ pages (internal linking, related packages)
+
+Ayla:
+- Conversations/day: 10+ (target)
+- Resolution rate (Ayla answers without human escalation): 70%+
+- Conversion rate (Ayla chat → form submission): 15%+
+
+Admin:
+- Inquiry response time: Current X hours
+- Target: < 2 hours (admin dashboard + notifications)
+- Package update frequency: When added
+- Target: Weekly (as trends change)
+
+Revenue:
+- Bookings/month: Current X
+- Target: +50% by Q3 2026 (all improvements combined)
+- Average booking value: +20%
+- Repeat bookings: Increase by 10% (loyalty + referrals)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+FINAL NOTES
+═══════════════════════════════════════════════════════════════════════════════
+
+This roadmap is comprehensive but prioritized. Don't try to do everything at once.
+
+Focus on:
+1. SEO (makes you visible)
+2. Ayla training (makes you smart)
+3. Admin dashboard (makes you operational)
+4. Blog (makes you authoritative)
+5. Mobile optimization (keeps users on site)
+
+These five will transform your business from a beautiful website to a high-converting, 
+competitive market leader.
+
+The additional features (calendar, testimonials, comparison tool, etc.) are the 
+"wow" factors that differentiate you further and increase LTV.
+
+Start Week 1 with SEO + Ayla. You'll see results immediately (increased organic 
+traffic, better customer engagement).
+
+Good luck, and welcome to the future of East African safari tourism! 🦁✈️🌍
+
+─────────────────────────────────────────────────────────────────────────────────
+Document Version: 1.0
+Created: May 27, 2026
+Author: Strategic Improvements Team
+Status: Ready for Implementation
