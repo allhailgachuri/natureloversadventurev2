@@ -67,8 +67,6 @@ export function HeroGallery() {
           loop
           playsInline
           autoPlay
-          // @ts-expect-error - attribute valid in HTML
-          "x-webkit-airplay"="deny"
           disablePictureInPicture
           controlsList="nodownload nofullscreen noremoteplayback"
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[800ms] ease-in-out"
