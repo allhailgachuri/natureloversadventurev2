@@ -72,14 +72,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Nature Lovers Adventure — Cinematic East African Safaris" },
+      { name: "description", content: "Curated luxury safaris across Kenya, Tanzania and East Africa. Personalised itineraries since 2017." },
+      { name: "author", content: "Nature Lovers Adventure" },
+      { property: "og:title", content: "Nature Lovers Adventure" },
+      { property: "og:description", content: "Cinematic East African safaris, curated journeys, expert local guides." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {
