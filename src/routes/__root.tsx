@@ -75,10 +75,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Nature Lovers Adventure — Cinematic East African Safaris" },
       { name: "description", content: "Curated luxury safaris across Kenya, Tanzania and East Africa. Personalised itineraries since 2017." },
       { name: "author", content: "Nature Lovers Adventure" },
-      { property: "og:title", content: "Nature Lovers Adventure" },
-      { property: "og:description", content: "Cinematic East African safaris, curated journeys, expert local guides." },
+      { property: "og:title", content: "Nature Lovers Adventure — Cinematic East African Safaris" },
+      { property: "og:description", content: "Curated luxury safaris across Kenya, Tanzania and East Africa. Personalised itineraries since 2017." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Nature Lovers Adventure — Cinematic East African Safaris" },
+      { name: "twitter:description", content: "Curated luxury safaris across Kenya, Tanzania and East Africa. Personalised itineraries since 2017." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/26689f5b-e125-4ecc-95e6-f2c03cde02de" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/26689f5b-e125-4ecc-95e6-f2c03cde02de" },
     ],
     links: [
       {
