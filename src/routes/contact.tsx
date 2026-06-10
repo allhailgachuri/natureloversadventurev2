@@ -179,8 +179,9 @@ function EnquiryForm() {
           <div className="h-px bg-espresso/10 mb-2">
             <motion.div animate={{ width: `${progress}%` }} transition={{ duration: 0.5 }} className="h-full bg-gold" />
           </div>
-          <div className="text-[12px] text-espresso/50 mb-8">
-            {done ? "Complete" : `Step ${step + 1} of ${totalSteps}`}
+          <div className="text-[12px] text-espresso/50 mb-8 flex items-center justify-between">
+            <span>{done ? "Complete" : `Step ${step + 1} of ${totalSteps}`}</span>
+            {!done && <span className="text-espresso/40">— {STEP_TOPICS[step]}</span>}
           </div>
 
           <AnimatePresence mode="wait">
