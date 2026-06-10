@@ -6,7 +6,15 @@ import { TEAM, TESTIMONIALS, ACCREDITATIONS, SERVICES } from "@/lib/site-data";
 
 export const Route = createFileRoute("/our-story")({
   component: OurStory,
-  head: () => ({ meta: [{ title: "Our Story — Nature Lovers Adventure" }] }),
+  head: () => ({
+    meta: [
+      { title: "Our Story — Nairobi-Based East African Safari Specialists Since 2017" },
+      { name: "description", content: "Meet Steve Mwangi and the Nature Lovers Adventure team — Nairobi-based safari specialists crafting personal East African journeys since 2017." },
+      { property: "og:title", content: "Our Story — Nature Lovers Adventure" },
+      { property: "og:description", content: "Meet Steve Mwangi and the Nature Lovers Adventure team — Nairobi-based safari specialists crafting personal East African journeys since 2017." },
+    ],
+    links: [{ rel: "canonical", href: "https://natureloversadventurev2.lovable.app/our-story" }],
+  }),
 });
 
 const HERO = "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=2000&q=80";

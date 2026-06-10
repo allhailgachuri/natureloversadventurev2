@@ -7,8 +7,30 @@ import { EMAIL, PHONE_PRIMARY, PHONE_SECONDARY, WHATSAPP_SHORT, WHATSAPP_URL } f
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
-  head: () => ({ meta: [{ title: "Contact Us — Nature Lovers Adventure" }] }),
+  head: () => ({
+    meta: [
+      { title: "Contact Us — Plan Your East African Safari | Nature Lovers" },
+      { name: "description", content: "Speak directly with Steve Mwangi and the Nairobi team. WhatsApp, email or send a detailed enquiry — we reply within 24 hours, usually faster." },
+      { property: "og:title", content: "Contact Us — Nature Lovers Adventure" },
+      { property: "og:description", content: "Speak directly with Steve Mwangi and the Nairobi team. WhatsApp, email or send a detailed enquiry — we reply within 24 hours, usually faster." },
+    ],
+    links: [{ rel: "canonical", href: "https://natureloversadventurev2.lovable.app/contact" }],
+  }),
 });
+
+const CONTACT_HERO = "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=2000&q=80";
+
+const STEP_TOPICS = [
+  "About you",
+  "Where to explore",
+  "Type of experience",
+  "Your budget",
+  "When to travel",
+  "Flights",
+  "Trip length",
+  "Travellers & details",
+  "Confirmation",
+];
 
 const STEPS = [
   { q: "Who are you travelling as?", options: ["Solo Adventurer", "Couple / Honeymoon", "Family with Children", "Group of Friends", "Corporate Group"], multi: false },
@@ -23,13 +45,15 @@ const STEPS = [
 function ContactPage() {
   return (
     <SiteShell>
-      <section className="pt-40 pb-20 px-6 bg-charcoal text-cream noise-texture">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="relative pt-40 pb-20 px-6 overflow-hidden bg-charcoal text-cream noise-texture">
+        <img src={CONTACT_HERO} alt="Golden hour over the Mara" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/80 via-charcoal/60 to-charcoal/85" />
+        <div className="relative max-w-3xl mx-auto text-center">
           <div className="label-eyebrow">Contact Us</div>
           <h1 className="mt-5 font-display font-bold text-cream text-[36px] md:text-[56px] leading-[1.05] tracking-tight">
             Let's Start Planning Your Safari
           </h1>
-          <p className="mt-6 text-cream/60 text-[17px] md:text-[18px]">
+          <p className="mt-6 text-cream/80 text-[17px] md:text-[18px]">
             We respond within 24 hours. Usually much faster.
           </p>
         </div>
@@ -84,7 +108,7 @@ function ContactPage() {
         <div className="max-w-[1300px] mx-auto rounded-3xl overflow-hidden">
           <iframe
             title="Nairobi, Kenya"
-            src="https://www.google.com/maps?q=Nairobi,Kenya&output=embed"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=36.7000%2C-1.3500%2C36.9500%2C-1.2000&layer=mapnik&marker=-1.2864%2C36.8172"
             width="100%"
             height="400"
             style={{ border: 0 }}
@@ -155,8 +179,9 @@ function EnquiryForm() {
           <div className="h-px bg-espresso/10 mb-2">
             <motion.div animate={{ width: `${progress}%` }} transition={{ duration: 0.5 }} className="h-full bg-gold" />
           </div>
-          <div className="text-[12px] text-espresso/50 mb-8">
-            {done ? "Complete" : `Step ${step + 1} of ${totalSteps}`}
+          <div className="text-[12px] text-espresso/50 mb-8 flex items-center justify-between">
+            <span>{done ? "Complete" : `Step ${step + 1} of ${totalSteps}`}</span>
+            {!done && <span className="text-espresso/40">— {STEP_TOPICS[step]}</span>}
           </div>
 
           <AnimatePresence mode="wait">

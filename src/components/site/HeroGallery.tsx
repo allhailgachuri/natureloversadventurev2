@@ -132,15 +132,17 @@ export function HeroGallery() {
       {/* Prev / Next */}
       <button
         onClick={() => go(active - 1)}
-        className="hidden md:block absolute left-6 top-1/2 -translate-y-1/2 z-[5] font-sans-ui text-[12px] font-bold uppercase tracking-[0.2em] text-cream/80 hover:text-gold transition-colors"
+        aria-label="Previous slide"
+        className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-[5] w-11 h-11 rounded-full bg-black/30 backdrop-blur-sm border border-cream/30 items-center justify-center text-cream/85 hover:text-gold hover:border-gold transition-colors"
       >
-        ‹ Prev
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
       <button
         onClick={() => go(active + 1)}
-        className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2 z-[5] font-sans-ui text-[12px] font-bold uppercase tracking-[0.2em] text-cream/80 hover:text-gold transition-colors"
+        aria-label="Next slide"
+        className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-[5] w-11 h-11 rounded-full bg-black/30 backdrop-blur-sm border border-cream/30 items-center justify-center text-cream/85 hover:text-gold hover:border-gold transition-colors"
       >
-        Next ›
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
 
       {/* Indicators */}

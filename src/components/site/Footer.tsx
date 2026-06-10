@@ -53,8 +53,8 @@ export function Footer() {
                   <Link to={n.to} className="text-cream/70 hover:text-gold transition-colors">{n.label}</Link>
                 </li>
               ))}
-              <li><a href="#" className="text-cream/70 hover:text-gold">Privacy Policy</a></li>
-              <li><a href="#" className="text-cream/70 hover:text-gold">Terms & Conditions</a></li>
+              <li><Link to="/privacy" className="text-cream/70 hover:text-gold">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="text-cream/70 hover:text-gold">Terms & Conditions</Link></li>
             </ul>
           </div>
 

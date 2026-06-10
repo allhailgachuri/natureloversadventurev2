@@ -2,12 +2,25 @@ import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteShell } from "@/components/site/SiteShell";
 import { CTABlock } from "@/components/site/CTABlock";
-import { PACKAGES, DESTINATIONS, ACTIVITIES, WHATSAPP_URL } from "@/lib/site-data";
+import { PACKAGES, DESTINATIONS, ACTIVITIES } from "@/lib/site-data";
 
 export const Route = createFileRoute("/safari-packages")({
   component: PackagesPage,
-  head: () => ({ meta: [{ title: "Safari Packages & Destinations — Nature Lovers Adventure" }] }),
+  head: () => ({
+    meta: [
+      { title: "Safari Packages — Kenya & Tanzania Itineraries | Nature Lovers" },
+      { name: "description", content: "Browse Kenya and Tanzania safari packages — Masai Mara, Amboseli, Samburu, Ngorongoro. Fully personalised itineraries, price on request." },
+      { property: "og:title", content: "Safari Packages — Nature Lovers Adventure" },
+      { property: "og:description", content: "Browse Kenya and Tanzania safari packages — Masai Mara, Amboseli, Samburu, Ngorongoro. Fully personalised itineraries, price on request." },
+    ],
+    links: [{ rel: "canonical", href: "https://natureloversadventurev2.lovable.app/safari-packages" }],
+  }),
 });
+
+const buildWaMsg = (pkg: { title: string; destinations: string[]; duration: string }) => {
+  const text = `Hello Nature Lovers Adventure! I'm interested in the ${pkg.title} (${pkg.duration}) covering ${pkg.destinations.join(", ")}. Could you share pricing and availability?`;
+  return `https://api.whatsapp.com/send?phone=254724660170&text=${encodeURIComponent(text)}`;
+};
 
 const HERO = "https://images.unsplash.com/photo-1534177616072-ef7dc120449d?auto=format&fit=crop&w=2000&q=80";
 
@@ -84,8 +97,7 @@ function PackagesPage() {
                 </div>
                 <div className="mt-4 text-gold text-[13px]">Price on Request</div>
                 <div className="mt-4 flex gap-5">
-                  <button className="text-gold font-sans-ui text-[12px] font-bold uppercase tracking-[0.16em] hover:text-cream">View Details →</button>
-                  <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="text-gold font-sans-ui text-[12px] font-bold uppercase tracking-[0.16em] hover:text-cream">WhatsApp</a>
+                  <a href={buildWaMsg(p)} target="_blank" rel="noreferrer" className="text-gold font-sans-ui text-[12px] font-bold uppercase tracking-[0.16em] hover:text-cream">Enquire on WhatsApp →</a>
                 </div>
               </div>
             </article>
@@ -102,7 +114,10 @@ function PackagesPage() {
               <div key={d.name} className="bg-cream-light rounded-3xl p-8 border border-espresso/5 hover:border-gold/30 transition-colors">
                 <h3 className="font-display font-bold text-espresso text-[28px]">{d.name}</h3>
                 <div className="mt-1 text-espresso/60 text-[13px]">{d.country}</div>
-                <div className="mt-5 text-espresso/60 text-[13px]">{PACKAGES.filter((p) => p.destinations.some((x) => x.toLowerCase().includes(d.name.toLowerCase()))).length} packages available</div>
+                {(() => {
+                  const n = PACKAGES.filter((p) => p.destinations.some((x) => x.toLowerCase().includes(d.name.toLowerCase()))).length;
+                  return <div className="mt-5 text-espresso/60 text-[13px]">{n} {n === 1 ? "package" : "packages"} available</div>;
+                })()}
                 <div className="mt-5 text-gold font-sans-ui text-[12px] font-bold uppercase tracking-[0.16em]">View Packages →</div>
               </div>
             ))}
@@ -120,7 +135,11 @@ function PackagesPage() {
               <h2 className="font-display font-bold text-cream text-[40px] md:text-[56px] leading-tight">{a.name}</h2>
               <p className="mt-3 font-serif-display italic text-cream/80 text-[18px] max-w-xl">{a.tagline}</p>
               <div className="mt-6 flex flex-wrap gap-3">
-                {PACKAGES.filter((p) => p.activity === a.name).map((p) => (
+                {PACKAGES.filter((p) => {
+                  const an = a.name.toLowerCase();
+                  const pa = p.activity.toLowerCase();
+                  return an.includes(pa) || pa.includes(an.split(" ")[0]);
+                }).map((p) => (
                   <span key={p.id} className="bg-cream/15 text-cream text-[12px] font-sans-ui px-4 py-2 rounded-full">{p.title}</span>
                 ))}
               </div>

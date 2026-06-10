@@ -1,13 +1,21 @@
 import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import { SiteShell } from "@/components/site/SiteShell";
 import { CTABlock } from "@/components/site/CTABlock";
 import { SERVICES } from "@/lib/site-data";
 
 export const Route = createFileRoute("/services")({
   component: ServicesPage,
-  head: () => ({ meta: [{ title: "Our Services — Nature Lovers Adventure" }] }),
+  head: () => ({
+    meta: [
+      { title: "Services — Tour Operations, Car Hire, Visa & Flights in Nairobi" },
+      { name: "description", content: "Professional tour operations, car & coach hire, flight booking, visa services, hotel booking and event management in Nairobi, Kenya." },
+      { property: "og:title", content: "Services — Nature Lovers Adventure" },
+      { property: "og:description", content: "Professional tour operations, car & coach hire, flight booking, visa services, hotel booking and event management in Nairobi, Kenya." },
+    ],
+    links: [{ rel: "canonical", href: "https://natureloversadventurev2.lovable.app/services" }],
+  }),
 });
 
 const HERO = "https://images.unsplash.com/photo-1523805009345-7448845a9e53?auto=format&fit=crop&w=2000&q=80";
@@ -75,10 +83,10 @@ function ServicesPage() {
 
 function StatsBar() {
   const stats = [
-    { value: 500, suffix: "+", label: "Safari Experiences" },
-    { value: 9, suffix: "", label: "Years of Excellence" },
-    { value: 12, suffix: "", label: "Destinations Covered" },
-    { value: 100, suffix: "%", label: "Personalised Journeys" },
+    { from: 450, to: 500, suffix: "+", label: "Safari Experiences" },
+    { from: 7, to: 9, suffix: "", label: "Years of Excellence" },
+    { from: 8, to: 12, suffix: "", label: "Destinations Covered" },
+    { from: 90, to: 100, suffix: "%", label: "Personalised Journeys" },
   ];
   return (
     <section className="bg-charcoal text-cream py-24 px-6 md:px-10 noise-texture">
@@ -91,23 +99,41 @@ function StatsBar() {
   );
 }
 
-function Stat({ value, suffix, label }: { value: number; suffix: string; label: string }) {
+function Stat({ from, to, suffix, label }: { from: number; to: number; suffix: string; label: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const [n, setN] = useState(0);
+  const [inView, setInView] = useState(false);
+  const [n, setN] = useState(from);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.8 },
+    );
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
+
   useEffect(() => {
     if (!inView) return;
-    const dur = 1800;
+    const dur = 1600;
     const start = performance.now();
     let raf = 0;
     const tick = (t: number) => {
       const p = Math.min(1, (t - start) / dur);
-      setN(Math.round(value * (1 - Math.pow(1 - p, 3))));
+      const eased = 1 - Math.pow(1 - p, 3);
+      setN(Math.round(from + (to - from) * eased));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [inView, value]);
+  }, [inView, from, to]);
+
   return (
     <motion.div ref={ref} initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="text-center md:text-left">
       <div className="font-display font-bold text-gold text-[56px] md:text-[72px] leading-none">

@@ -11,8 +11,25 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Nature Lovers Adventure — Cinematic East African Safaris" },
-      { name: "description", content: "Curated luxury safaris across Kenya, Tanzania and East Africa. Personalised itineraries, expert local guides, unforgettable journeys since 2017." },
+      { name: "description", content: "Cinematic, fully personalised Kenya and Tanzania safaris from a Nairobi-based team. Curated journeys, expert local guides, since 2017." },
+      { property: "og:title", content: "Nature Lovers Adventure — Cinematic East African Safaris" },
+      { property: "og:description", content: "Cinematic, fully personalised Kenya and Tanzania safaris from a Nairobi-based team. Curated journeys, expert local guides, since 2017." },
     ],
+    links: [{ rel: "canonical", href: "https://natureloversadventurev2.lovable.app/" }],
+    scripts: [{
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        name: "Nature Lovers Adventure",
+        url: "https://natureloversadventurev2.lovable.app/",
+        telephone: "+254724660170",
+        email: "info@natureloversadventure.co.ke",
+        address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE", postalCode: "00100" },
+        areaServed: ["Kenya", "Tanzania"],
+        priceRange: "$$$",
+      }),
+    }],
   }),
 });
 
