@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { EMAIL, PHONE_PRIMARY, PHONE_SECONDARY, WHATSAPP_SHORT } from "@/lib/site-data";
+import { EMAIL, PHONE_PRIMARY, WHATSAPP_SHORT } from "@/lib/site-data";
 import { Wordmark } from "./Wordmark";
 
 const NAV = [
@@ -41,7 +41,6 @@ export function Footer() {
               <div>Nairobi, Kenya 00100</div>
               <a href={`mailto:${EMAIL}`} className="block hover:text-gold">{EMAIL}</a>
               <div>{PHONE_PRIMARY}</div>
-              <div>{PHONE_SECONDARY}</div>
             </div>
           </div>
 

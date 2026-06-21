@@ -1,9 +1,17 @@
+import nairobiImg from "@/assets/nairobi.jpg";
+import nakuruImg from "@/assets/nakuru.jpg";
+import tourOpsImg from "@/assets/tour-operations.jpg";
+import carRentalImg from "@/assets/car-rental.jpg";
+import visaImg from "@/assets/visa.jpg";
+import eventImg from "@/assets/event.jpg";
+import beachImg from "@/assets/beach.jpg";
+import tanzaniaImg from "@/assets/tanzania.jpg";
+
 export const WHATSAPP_NUMBER = "254724660170";
 export const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=Hello%20Nature%20Lovers%20Adventure!%20I%27m%20interested%20in%20planning%20a%20safari.%20Could%20you%20help%20me%20with%20more%20information%3F`;
 export const WHATSAPP_SHORT = `https://wa.me/${WHATSAPP_NUMBER}`;
 export const EMAIL = "info@natureloversadventure.co.ke";
 export const PHONE_PRIMARY = "+254 724 660170";
-export const PHONE_SECONDARY = "+254 722 888681";
 
 const CLD = "https://res.cloudinary.com/do5nefu0c/video/upload";
 const v = (path: string) => `${CLD}/q_auto,f_auto,vc_auto,so_0/${path}`;
@@ -29,7 +37,6 @@ export const HERO_VIDEOS: HeroVideo[] = [
   { src: v("v1779661444/227950_medium_cumuvl.mp4"), poster: poster("v1779661444/227950_medium_cumuvl.mp4"), line1: "See Africa Differently", line2: "Elegant Journeys Through Nature", label: "Giraffes" },
 ];
 
-// Cinematic Unsplash imagery of real East African locations (1600w, art-direction friendly).
 const u = (id: string, w = 1600) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
 
@@ -70,7 +77,7 @@ export const PACKAGES: Package[] = [
     title: "Bush & Beach 9 Days Safari",
     duration: "8N · 9D",
     destinations: ["Mombasa", "Nairobi", "Masai Mara", "Amboseli NP", "Lake Naivasha"],
-    image: u("photo-1516026672322-bc52d61a55d5"),
+    image: beachImg,
     themes: ["Beach & Islands", "Wildlife"],
     activity: "Beach Sightseeing",
     country: "Kenya",
@@ -100,17 +107,17 @@ export const PACKAGES: Package[] = [
     title: "Amazing Kenya 7 Days",
     duration: "6N · 7D",
     destinations: ["Nairobi", "Nakuru", "Masai Mara", "Naivasha", "Nakuru NP"],
-    image: u("photo-1535941339077-2dd1c7963098"),
+    image: nakuruImg,
     themes: ["Wildlife"],
     activity: "Game Drives",
     country: "Kenya",
   },
   {
     id: "package-7",
-    title: "Mind Range 11 Days Kenya–Tanzania",
+    title: "Mid Range 11 Days Kenya–Tanzania",
     duration: "10N · 11D",
     destinations: ["Nairobi", "Nakuru", "Masai Mara", "Ngorongoro", "Amboseli"],
-    image: u("photo-1523805009345-7448845a9e53"),
+    image: tanzaniaImg,
     themes: ["Wildlife", "Safari"],
     activity: "Jeep Safari",
     country: "Kenya & Tanzania",
@@ -141,7 +148,7 @@ export const SERVICES: Service[] = [
       "There is an art to designing the perfect African safari — and we have spent years perfecting it. We do not offer off-the-shelf packages; every itinerary begins with a conversation about you. Whether you seek the Big Five, the Great Migration, or a cultural immersion, our specialists build the experience around your exact vision. From Nairobi to Ngorongoro, from Samburu to Zanzibar, we cater to families, couples, solo adventurers, and corporate groups.",
     highlights: ["Fully Customised Itineraries", "All Age Groups", "Local & International Packages"],
     cta: "Plan Your Safari",
-    image: u("photo-1516026672322-bc52d61a55d5"),
+    image: tourOpsImg,
   },
   {
     id: "car-rental",
@@ -154,7 +161,7 @@ export const SERVICES: Service[] = [
       "Every great East African adventure begins with reliable transportation. Our fleet of 4x4 safari cruisers and spacious coaches is maintained to the highest standards, equipped for every terrain from Samburu's dust roads to the open Mara plains. Our professional drivers know the roads and the parks intimately — whether you need a JKIA transfer, a full-circuit safari vehicle, or a corporate group coach.",
     highlights: ["Professional Drivers", "4x4 Safari Fleet", "Group Coaches Available"],
     cta: "Book Transport",
-    image: u("photo-1500530855697-b586d89ba3ee"),
+    image: carRentalImg,
   },
   {
     id: "flight-booking",
@@ -180,7 +187,7 @@ export const SERVICES: Service[] = [
       "The paperwork between you and Africa should never be a barrier. We guide you through every form, requirement, and deadline with precision — from tourist visas for Kenya and Tanzania to work permits and student documentation. Our advisors prepare, guide, and follow up on your behalf.",
     highlights: ["Tourist & Business Visas", "Passport Applications", "Work & Student Permits"],
     cta: "Get Assistance",
-    image: u("photo-1554224155-6726b3ff858f"),
+    image: visaImg,
   },
   {
     id: "events",
@@ -193,7 +200,7 @@ export const SERVICES: Service[] = [
       "Whether you are planning an intimate bush wedding, a corporate retreat, a product launch in the wilderness, or a private celebration — we bring precision, creativity, and passion. We handle venue selection, guest logistics, catering, decor, entertainment, and on-the-day management.",
     highlights: ["Corporate Events", "Private Celebrations", "Bush Weddings", "Product Launches"],
     cta: "Plan Your Event",
-    image: u("photo-1519741497674-611481863552"),
+    image: eventImg,
   },
   {
     id: "hotels",
@@ -212,17 +219,17 @@ export const SERVICES: Service[] = [
 
 export const DESTINATIONS = [
   { name: "Masai Mara", country: "Kenya", tagline: "Where the wild still rules.", image: u("photo-1547471080-7cc2caa01a7e") },
-  { name: "Nairobi", country: "Kenya", tagline: "The city that meets the wild.", image: u("photo-1611348586804-61bf6c080437") },
-  { name: "Nakuru", country: "Kenya", tagline: "A million wings at dawn.", image: u("photo-1535941339077-2dd1c7963098") },
-  { name: "Ngorongoro", country: "Tanzania", tagline: "A crater of impossible green.", image: u("photo-1523805009345-7448845a9e53") },
-  { name: "Mombasa", country: "Kenya", tagline: "Where the Indian Ocean sings.", image: u("photo-1516026672322-bc52d61a55d5") },
+  { name: "Nairobi", country: "Kenya", tagline: "The city that meets the wild.", image: nairobiImg },
+  { name: "Nakuru", country: "Kenya", tagline: "A million wings at dawn.", image: nakuruImg },
+  { name: "Ngorongoro", country: "Tanzania", tagline: "A crater of impossible green.", image: tanzaniaImg },
+  { name: "Mombasa", country: "Kenya", tagline: "Where the Indian Ocean sings.", image: beachImg },
   { name: "Samburu", country: "Kenya", tagline: "Northern frontier, ancient land.", image: u("photo-1504280390367-361c6d9f38f4") },
 ];
 
 export const ACTIVITIES = [
-  { id: "game-drives", name: "Game Drives", tagline: "Witness the Big Five in their natural kingdom", image: u("photo-1534177616072-ef7dc120449d") },
-  { id: "jeep-safari", name: "Jeep Safari Tours", tagline: "Off-road adventure through untamed landscapes", image: u("photo-1547970810-dc1eac37d174") },
-  { id: "beach", name: "Beach Sightseeing", tagline: "Where the Indian Ocean meets paradise", image: u("photo-1559825481-12a05cc00344") },
+  { id: "game-drives", name: "Game Drives", tagline: "Witness the Big Five in their natural kingdom", image: tourOpsImg },
+  { id: "jeep-safari", name: "Jeep Safari Tours", tagline: "Off-road adventure through untamed landscapes", image: carRentalImg },
+  { id: "beach", name: "Beach Sightseeing", tagline: "Where the Indian Ocean meets paradise", image: beachImg },
 ];
 
 export const TEAM = [
@@ -230,7 +237,8 @@ export const TEAM = [
   { initials: "SM", name: "Sarah Mwangi", title: "Director of Client Experience", message: "From the moment you reach out, you should feel completely looked after. The effort happens behind the scenes — that is my job.", role: "The heart of every client relationship. Sarah ensures every traveller feels personally cared for from first enquiry to final farewell." },
   { initials: "IM", name: "Ian Mwangi", title: "Safari Operations Lead", message: "The right vehicle, the right permit, the right guide at the right time — invisible when they work. I make sure they always work.", role: "The logistics architect. Ian coordinates vehicles, park permits, guide briefings, and on-ground execution with precision." },
   { initials: "MM", name: "Mary Mwangi", title: "Brand & Partnerships Coordinator", message: "Africa has the most extraordinary story to tell. Every lodge, every partner, every image that represents us has to be worthy of the continent we love.", role: "The storyteller. Mary manages lodge relationships, partner networks, and the visual identity that makes Nature Lovers Adventure instantly recognisable." },
-  { initials: "FRG", name: "Francis Rushion Gachuri Chegge", title: "Technology Director", message: "Every line of code on this site was written with one goal — to make you feel Africa before you book a flight.", role: "The digital architect behind every pixel of this website. Rushion built the booking systems, analytics infrastructure, and the AI tools that power the brand online.", link: "https://rushionsportfolio.vercel.app/" },
+  { initials: "BM", name: "Bonny Maina", title: "All-Round Travel Consultant", message: "No two travellers want the same Africa. My job is to listen first — then quietly pull every thread together so your trip simply works.", role: "The full-spectrum consultant. Bonny advises across destinations, bookings, documentation and on-trip support — a single calm point of contact bringing years of agency experience to every enquiry she handles." },
+  { initials: "RG", name: "Rushion Gachuri", title: "Technology Director", message: "Every line of code on this site was written with one goal — to make you feel Africa before you book a flight.", role: "The digital architect behind every pixel of this website. Rushion built the booking systems, analytics infrastructure, and the AI tools that power the brand online.", link: "https://rushionsportfolio.vercel.app/" },
 ];
 
 export const TESTIMONIALS = [
@@ -246,5 +254,6 @@ export const ACCREDITATIONS = [
   { org: "Kenya Tourism Board", credential: "Registered Tour Operator #KTB/2017/4829", desc: "Certified compliant tour operator, Kenya national tourism authority.", year: "Since 2017" },
   { org: "Tanzania Association of Tour Operators (TATO)", credential: "Active Member", desc: "Full membership in Tanzania's primary tour operator body.", year: "Since 2019" },
   { org: "Kenya Association of Tour Operators (KATO)", credential: "Certified Member", desc: "Active member of Kenya's leading tour and travel industry association.", year: "Since 2018" },
+  { org: "AMREF Health Africa", credential: "Registered Travel Partner", desc: "Registered with AMREF — Africa's leading health development organisation — ensuring traveller medical safety, evacuation cover and responsible field practices.", year: "Registered Partner" },
   { org: "Sustainable Travel International", credential: "Eco-Tourism Partner", desc: "Committed to responsible travel practices and conservation.", year: "Since 2020" },
 ];
