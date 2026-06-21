@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { EMAIL, PHONE_PRIMARY, PHONE_SECONDARY, WHATSAPP_URL } from "@/lib/site-data";
+import { EMAIL, PHONE_PRIMARY, WHATSAPP_URL } from "@/lib/site-data";
 
 export function CTABlock() {
   return (
@@ -33,9 +33,7 @@ export function CTABlock() {
         </div>
         <div className="mt-12 text-[13px] text-cream/50 space-y-1">
           <div><a href={`mailto:${EMAIL}`} className="hover:text-gold">{EMAIL}</a></div>
-          <div>
-            {PHONE_PRIMARY} (WhatsApp & Enquiries) · {PHONE_SECONDARY} (Call Enquiries)
-          </div>
+          <div>{PHONE_PRIMARY}</div>
         </div>
       </div>
     </section>

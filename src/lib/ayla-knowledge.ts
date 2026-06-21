@@ -622,7 +622,7 @@ export const AYLA_KNOWLEDGE = {
     name: "Nature Lovers Adventure",
     founded: 2020,
     headquarters: "Nairobi, Kenya",
-    phone: "+254-724-660170 (Steve - WhatsApp)",
+    phone: "+254 724 660170",
     email: "info@natureloversadventure.co.ke",
     specializations: [
       "Luxury safari packages",
