@@ -17,9 +17,10 @@ export const Route = createFileRoute("/our-story")({
   }),
 });
 
+import WILDERNESS from "@/assets/wilderness.jpg";
+import STEVE from "@/assets/steve.jpg";
 const HERO = "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=2000&q=80";
-const NAIROBI = "https://images.unsplash.com/photo-1611348586804-61bf6c080437?auto=format&fit=crop&w=1400&q=80";
-const STEVE = "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1400&q=80";
+const NAIROBI = WILDERNESS;
 
 function OurStory() {
   return (

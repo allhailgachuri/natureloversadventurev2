@@ -83,8 +83,8 @@ function ServicesPage() {
 
 function StatsBar() {
   const stats = [
-    { from: 450, to: 500, suffix: "+", label: "Safari Experiences" },
-    { from: 7, to: 9, suffix: "", label: "Years of Excellence" },
+    { from: 150, to: 200, suffix: "+", label: "Safari Experiences" },
+    { from: 1, to: 1, suffix: "+", label: "Years of Excellence" },
     { from: 8, to: 12, suffix: "", label: "Destinations Covered" },
     { from: 90, to: 100, suffix: "%", label: "Personalised Journeys" },
   ];

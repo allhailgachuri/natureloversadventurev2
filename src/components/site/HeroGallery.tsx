@@ -123,38 +123,10 @@ export function HeroGallery() {
         </div>
 
         <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-cream/70 text-[12px] font-sans-ui">
-          <span><span className="text-gold">★★★★★</span> Google 4.8 · 215 Reviews</span>
+          <span><span className="text-gold">★★★★★</span> Google 4.9 · 103 Reviews</span>
           <span><span className="text-gold">★★★★★</span> TripAdvisor 5.0 · 24 Reviews</span>
           <span><span className="text-gold">★★★★★</span> SafariBookings 4.8 · 28 Reviews</span>
         </div>
-      </div>
-
-      {/* Prev / Next */}
-      <button
-        onClick={() => go(active - 1)}
-        aria-label="Previous slide"
-        className="hidden md:flex absolute left-6 top-1/2 -translate-y-1/2 z-[5] w-11 h-11 rounded-full bg-black/30 backdrop-blur-sm border border-cream/30 items-center justify-center text-cream/85 hover:text-gold hover:border-gold transition-colors"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button
-        onClick={() => go(active + 1)}
-        aria-label="Next slide"
-        className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 z-[5] w-11 h-11 rounded-full bg-black/30 backdrop-blur-sm border border-cream/30 items-center justify-center text-cream/85 hover:text-gold hover:border-gold transition-colors"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
-
-      {/* Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-[5] flex gap-3">
-        {HERO_VIDEOS.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => go(i)}
-            className={`h-px transition-all duration-500 ${i === active ? "w-10 bg-gold" : "w-6 bg-cream/40"}`}
-            aria-label={`Slide ${i + 1}`}
-          />
-        ))}
       </div>
 
       {needsTap && (

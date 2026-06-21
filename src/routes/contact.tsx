@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { SiteShell } from "@/components/site/SiteShell";
 import { CTABlock } from "@/components/site/CTABlock";
-import { EMAIL, PHONE_PRIMARY, PHONE_SECONDARY, WHATSAPP_SHORT, WHATSAPP_URL } from "@/lib/site-data";
+import { EMAIL, PHONE_PRIMARY, WHATSAPP_SHORT, WHATSAPP_URL } from "@/lib/site-data";
 
 export const Route = createFileRoute("/contact")({
   component: ContactPage,
@@ -69,8 +69,7 @@ function ContactPage() {
           </div>
           <div>
             <div className="label-eyebrow">Call or WhatsApp</div>
-            <p className="mt-4 text-espresso text-[16px]"><a href={WHATSAPP_SHORT} className="hover:text-gold">{PHONE_PRIMARY}</a> (WhatsApp & Enquiries)</p>
-            <p className="mt-1 text-espresso text-[16px]">{PHONE_SECONDARY} (Call Enquiries)</p>
+            <p className="mt-4 text-espresso text-[16px]"><a href={WHATSAPP_SHORT} className="hover:text-gold">{PHONE_PRIMARY}</a></p>
             <p className="mt-4 text-espresso/60 text-[14px]">Monday–Saturday: 8:00 AM – 7:00 PM EAT<br />Sunday: 10:00 AM – 4:00 PM EAT</p>
           </div>
           <div>
