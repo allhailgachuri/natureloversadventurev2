@@ -31,7 +31,7 @@
 ### Frontend Framework
 
 - **React 19** — Modern UI with concurrent rendering
-- **TanStack Start 1.167** — Full-stack React framework with built-in SSR
+- **TanStack Start 1.167** — Full-stack React framework with built-in SSR (Fully independent standard configuration, decoupled from Lovable)
 - **Vite 7.3.1** — Lightning-fast build and dev server
 - **Tailwind CSS 4.2** — Utility-first styling with custom design tokens
 - **Framer Motion 12.40** — Smooth animations and micro-interactions

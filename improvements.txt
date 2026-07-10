@@ -7,7 +7,7 @@ Adventure from a premium brand experience into a high-converting, SEO-visible,
 differentiated market leader in East African safari tourism.
 
 STATUS: Compiled May 27, 2026 | Priority: CRITICAL → HIGH → MEDIUM
-
+*UPDATE (Recent)*: The codebase has been fully decoupled from the Lovable development platform. All Lovable build configurations, telemetry, and watermarks have been removed. The project now relies on a standard Vite, TanStack Start, and Nitro configuration. Additionally, the SEO domain mismatch has been resolved (all URLs now point to `natureloversadventure.co.ke`).
 
 ═══════════════════════════════════════════════════════════════════════════════
 SECTION 1: SEO INFRASTRUCTURE — CRITICAL (Make You Visible to Google)

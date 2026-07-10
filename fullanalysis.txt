@@ -13,7 +13,7 @@ REPOSITORY SHAPE
 ----------------
 Top-level files and their role:
 - `package.json` defines a TanStack Start app with Vite, React 19, Tailwind 4, Cloudflare, Framer Motion, Radix/Shadcn primitives, React Hook Form, Zod, React Query, and the usual utility stack.
-- `vite.config.ts` uses the Lovable/TanStack preset and redirects the server entry to `src/server.ts`.
+- `vite.config.ts` uses standard TanStack Start and Nitro plugins (Lovable preset has been removed) and redirects the server entry to `src/server.ts`.
 - `wrangler.jsonc` confirms Cloudflare Workers deployment with Node compatibility.
 - `tsconfig.json` is strict, uses bundler resolution, and maps `@/*` to `src/*`.
 - `eslint.config.js`, `components.json`, and `bunfig.toml` support linting, UI scaffolding, and Bun tooling.
@@ -201,8 +201,7 @@ What is good:
 - The homepage already includes structured data, which is a meaningful step.
 
 What is still weak or inconsistent:
-- The sitemap and robots file point to `natureloversadventure.co.ke`, while the route canonicals and meta in code use `natureloversadventurev2.lovable.app`.
-- That domain mismatch should be fixed before launch, because it creates confusion for search engines and for social sharing.
+- The sitemap and robots file correctly point to `natureloversadventure.co.ke`, and the route canonicals and meta in code have been updated to match, resolving a previous domain mismatch issue.
 - The OG image on the root route points to a Google storage asset rather than a branded domain asset.
 - Blog content and deeper schema coverage are not present yet, despite the roadmap in `improvements.txt`.
 
