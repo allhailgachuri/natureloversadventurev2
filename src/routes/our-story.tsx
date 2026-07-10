@@ -13,7 +13,7 @@ export const Route = createFileRoute("/our-story")({
       { property: "og:title", content: "Our Story — Nature Lovers Adventure" },
       { property: "og:description", content: "Meet Steve Mwangi and the Nature Lovers Adventure team — Nairobi-based safari specialists crafting personal East African journeys since 2017." },
     ],
-    links: [{ rel: "canonical", href: "https://natureloversadventurev2.lovable.app/our-story" }],
+    links: [{ rel: "canonical", href: "https://natureloversadventure.co.ke/our-story" }],
   }),
 });
 

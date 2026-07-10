@@ -14,7 +14,7 @@ export const Route = createFileRoute("/services")({
       { property: "og:title", content: "Services — Nature Lovers Adventure" },
       { property: "og:description", content: "Professional tour operations, car & coach hire, flight booking, visa services, hotel booking and event management in Nairobi, Kenya." },
     ],
-    links: [{ rel: "canonical", href: "https://natureloversadventurev2.lovable.app/services" }],
+    links: [{ rel: "canonical", href: "https://natureloversadventure.co.ke/services" }],
   }),
 });
 

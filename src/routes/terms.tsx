@@ -9,7 +9,7 @@ export const Route = createFileRoute("/terms")({
       { title: "Terms & Conditions — Nature Lovers Adventure" },
       { name: "description", content: "Booking terms, payment, cancellation policy and liability for safaris and travel services with Nature Lovers Adventure." },
     ],
-    links: [{ rel: "canonical", href: "https://natureloversadventurev2.lovable.app/terms" }],
+    links: [{ rel: "canonical", href: "https://natureloversadventure.co.ke/terms" }],
   }),
 });
 

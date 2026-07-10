@@ -9,7 +9,7 @@ export const Route = createFileRoute("/privacy")({
       { title: "Privacy Policy — Nature Lovers Adventure" },
       { name: "description", content: "How Nature Lovers Adventure collects, uses and protects your personal data when you enquire about safaris and travel services." },
     ],
-    links: [{ rel: "canonical", href: "https://natureloversadventurev2.lovable.app/privacy" }],
+    links: [{ rel: "canonical", href: "https://natureloversadventure.co.ke/privacy" }],
   }),
 });
 

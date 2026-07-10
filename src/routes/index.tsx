@@ -15,14 +15,14 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Nature Lovers Adventure — Cinematic East African Safaris" },
       { property: "og:description", content: "Cinematic, fully personalised Kenya and Tanzania safaris from a Nairobi-based team. Curated journeys, expert local guides, since 2017." },
     ],
-    links: [{ rel: "canonical", href: "https://natureloversadventurev2.lovable.app/" }],
+    links: [{ rel: "canonical", href: "https://natureloversadventure.co.ke/" }],
     scripts: [{
       type: "application/ld+json",
       children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "TravelAgency",
         name: "Nature Lovers Adventure",
-        url: "https://natureloversadventurev2.lovable.app/",
+        url: "https://natureloversadventure.co.ke/",
         telephone: "+254724660170",
         email: "info@natureloversadventure.co.ke",
         address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE", postalCode: "00100" },
