@@ -8,7 +8,7 @@ const LINKS = [
   { to: "/our-story", label: "Our Story" },
   { to: "/services", label: "Services" },
   { to: "/safari-packages", label: "Safari Packages" },
-  { to: "/contact", label: "Contact Us" },
+  { to: "/gallery", label: "Gallery" },
 ] as const;
 
 export function Navbar() {
@@ -25,6 +25,16 @@ export function Navbar() {
 
   useEffect(() => setOpen(false), [path]);
 
+  // Handle body scroll locking when mobile menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [open]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -34,11 +44,33 @@ export function Navbar() {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-5 flex items-center justify-between">
         <Wordmark tone="light" />
 
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-8">
+          {LINKS.map(l => (
+            <Link 
+              key={l.to} 
+              to={l.to} 
+              className={`font-sans-ui text-[13px] uppercase tracking-wider font-bold transition-colors ${
+                path === l.to ? "text-gold" : "text-cream hover:text-gold"
+              }`}
+            >
+              {l.label}
+            </Link>
+          ))}
+          <Link 
+            to="/contact" 
+            className="ml-2 inline-block font-sans-ui text-[12px] font-bold uppercase tracking-[0.16em] bg-gold text-espresso px-6 py-3 rounded-full hover:bg-gold/90 transition-colors"
+          >
+            Enquire Now
+          </Link>
+        </nav>
+
+        {/* Mobile Menu Toggle */}
         <button
           onClick={() => setOpen((v) => !v)}
           aria-label="Toggle menu"
           aria-expanded={open}
-          className="relative w-12 h-12 flex flex-col items-center justify-center gap-[6px] group"
+          className="lg:hidden relative w-12 h-12 flex flex-col items-center justify-center gap-[6px] group z-50"
         >
           <motion.span
             animate={open ? { rotate: 45, y: 8, width: 28 } : { rotate: 0, y: 0, width: 28 }}
@@ -58,6 +90,7 @@ export function Navbar() {
         </button>
       </div>
 
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -65,7 +98,7 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 top-[88px] bg-charcoal/97 backdrop-blur-lg flex flex-col items-center justify-center gap-7 px-8"
+            className="lg:hidden fixed inset-0 top-[88px] bg-charcoal/95 backdrop-blur-xl flex flex-col items-center justify-center gap-7 px-8 h-[calc(100vh-88px)] overflow-y-auto pb-12"
           >
             {LINKS.map((l, i) => (
               <motion.div
@@ -76,22 +109,39 @@ export function Navbar() {
               >
                 <Link
                   to={l.to}
-                  className={`font-display text-3xl md:text-5xl hover:text-gold transition-colors ${
-                    path === l.to ? "text-gold" : "text-cream"
+                  className={`font-display text-3xl md:text-5xl transition-colors ${
+                    path === l.to ? "text-gold" : "text-cream hover:text-gold"
                   }`}
                 >
                   {l.label}
                 </Link>
               </motion.div>
             ))}
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08 + LINKS.length * 0.06, duration: 0.4 }}
+            >
+              <Link
+                to="/contact"
+                className={`font-display text-3xl md:text-5xl transition-colors ${
+                  path === "/contact" ? "text-gold" : "text-cream hover:text-gold"
+                }`}
+              >
+                Contact Us
+              </Link>
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.45, duration: 0.4 }}
+              className="mt-6"
             >
               <Link
                 to="/contact"
-                className="mt-4 inline-block font-sans-ui text-[13px] font-bold uppercase tracking-[0.16em] bg-gold text-espresso px-8 py-4 rounded-full"
+                className="inline-block font-sans-ui text-[14px] font-bold uppercase tracking-[0.16em] bg-gold text-espresso px-10 py-4 rounded-full"
               >
                 Enquire Now
               </Link>

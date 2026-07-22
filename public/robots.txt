@@ -3,7 +3,7 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 
-Sitemap: https://natureloversadventure.co.ke/sitemap.xml
+Sitemap: https://natureloverstravels.com/sitemap.xml
 
 User-agent: AdsBot-Google
 Allow: /

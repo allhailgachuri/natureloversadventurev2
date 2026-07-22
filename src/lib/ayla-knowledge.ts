@@ -623,7 +623,7 @@ export const AYLA_KNOWLEDGE = {
     founded: 2020,
     headquarters: "Nairobi, Kenya",
     phone: "+254 724 660170",
-    email: "info@natureloversadventure.co.ke",
+    email: "info@natureloverstravels.com",
     specializations: [
       "Luxury safari packages",
       "Budget-friendly tours",

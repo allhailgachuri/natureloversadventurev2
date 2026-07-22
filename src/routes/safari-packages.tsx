@@ -13,7 +13,7 @@ export const Route = createFileRoute("/safari-packages")({
       { property: "og:title", content: "Safari Packages — Nature Lovers Adventure" },
       { property: "og:description", content: "Browse Kenya and Tanzania safari packages — Masai Mara, Amboseli, Samburu, Ngorongoro. Fully personalised itineraries, price on request." },
     ],
-    links: [{ rel: "canonical", href: "https://natureloversadventure.co.ke/safari-packages" }],
+    links: [{ rel: "canonical", href: "https://natureloverstravels.com/safari-packages" }],
   }),
 });
 

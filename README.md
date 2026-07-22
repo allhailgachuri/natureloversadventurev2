@@ -288,7 +288,7 @@ All hosted on Cloudinary with automatic quality optimization (WebM for Chrome, M
 
 - **Primary WhatsApp**: +254-724-660170 (Steve)
 - **Secondary Phone**: +254-722-888681
-- **Email**: info@natureloversadventure.co.ke
+- **Email**: info@natureloverstravels.com
 - **Location**: Nairobi, Kenya
 
 ---
@@ -349,7 +349,7 @@ npx shadcn-ui@latest add dialog
 ```env
 VITE_CLOUDINARY_URL=https://res.cloudinary.com/do5nefu0c
 VITE_WHATSAPP_NUMBER=254724660170
-VITE_EMAIL=info@natureloversadventure.co.ke
+VITE_EMAIL=info@natureloverstravels.com
 ```
 
 ---
@@ -502,8 +502,8 @@ This project is proprietary to Nature Lovers Adventure. All rights reserved.
 
 ## 📞 Support & Inquiries
 
-- **Website**: natureloversadventure.co.ke
-- **Email**: info@natureloversadventure.co.ke
+- **Website**: natureloverstravels.com
+- **Email**: info@natureloverstravels.com
 - **WhatsApp**: +254-724-660170 (Steve)
 - **Location**: Nairobi, Kenya
 

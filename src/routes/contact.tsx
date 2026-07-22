@@ -14,7 +14,7 @@ export const Route = createFileRoute("/contact")({
       { property: "og:title", content: "Contact Us — Nature Lovers Adventure" },
       { property: "og:description", content: "Speak directly with Steve Mwangi and the Nairobi team. WhatsApp, email or send a detailed enquiry — we reply within 24 hours, usually faster." },
     ],
-    links: [{ rel: "canonical", href: "https://natureloversadventure.co.ke/contact" }],
+    links: [{ rel: "canonical", href: "https://natureloverstravels.com/contact" }],
   }),
 });
 

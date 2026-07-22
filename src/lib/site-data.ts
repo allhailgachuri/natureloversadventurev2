@@ -1,7 +1,7 @@
 import nairobiImg from "@/assets/nairobi.jpg";
 import nakuruImg from "@/assets/nakuru.jpg";
-import tourOpsImg from "@/assets/tour-operations.jpg";
-import carRentalImg from "@/assets/car-rental.jpg";
+const tourOpsImg = "/gallery/photo6.png";
+const carRentalImg = "/gallery/photo9.png";
 import visaImg from "@/assets/visa.jpg";
 import eventImg from "@/assets/event.jpg";
 import beachImg from "@/assets/beach.jpg";
@@ -10,7 +10,7 @@ import tanzaniaImg from "@/assets/tanzania.jpg";
 export const WHATSAPP_NUMBER = "254724660170";
 export const WHATSAPP_URL = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=Hello%20Nature%20Lovers%20Adventure!%20I%27m%20interested%20in%20planning%20a%20safari.%20Could%20you%20help%20me%20with%20more%20information%3F`;
 export const WHATSAPP_SHORT = `https://wa.me/${WHATSAPP_NUMBER}`;
-export const EMAIL = "info@natureloversadventure.co.ke";
+export const EMAIL = "info@natureloverstravels.com";
 export const PHONE_PRIMARY = "+254 724 660170";
 
 const CLD = "https://res.cloudinary.com/do5nefu0c/video/upload";

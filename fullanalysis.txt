@@ -201,7 +201,7 @@ What is good:
 - The homepage already includes structured data, which is a meaningful step.
 
 What is still weak or inconsistent:
-- The sitemap and robots file correctly point to `natureloversadventure.co.ke`, and the route canonicals and meta in code have been updated to match, resolving a previous domain mismatch issue.
+- The sitemap and robots file correctly point to `natureloverstravels.com`, and the route canonicals and meta in code have been updated to match, resolving a previous domain mismatch issue.
 - The OG image on the root route points to a Google storage asset rather than a branded domain asset.
 - Blog content and deeper schema coverage are not present yet, despite the roadmap in `improvements.txt`.
 

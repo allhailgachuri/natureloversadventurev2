@@ -267,7 +267,7 @@ Admin Dashboard (Future):
 QUESTIONS? NEXT STEPS?
 ═══════════════════════════════════════════════════════════════════════════════
 
-Your site is live at: localhost:5173 (dev) or natureloversadventure.co.ke (prod)
+Your site is live at: localhost:5173 (dev) or natureloverstravels.com (prod)
 
 Next priorities:
 

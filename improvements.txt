@@ -7,7 +7,7 @@ Adventure from a premium brand experience into a high-converting, SEO-visible,
 differentiated market leader in East African safari tourism.
 
 STATUS: Compiled May 27, 2026 | Priority: CRITICAL → HIGH → MEDIUM
-*UPDATE (Recent)*: The codebase has been fully decoupled from the Lovable development platform. All Lovable build configurations, telemetry, and watermarks have been removed. The project now relies on a standard Vite, TanStack Start, and Nitro configuration. Additionally, the SEO domain mismatch has been resolved (all URLs now point to `natureloversadventure.co.ke`).
+*UPDATE (Recent)*: The codebase has been fully decoupled from the Lovable development platform. All Lovable build configurations, telemetry, and watermarks have been removed. The project now relies on a standard Vite, TanStack Start, and Nitro configuration. Additionally, the SEO domain mismatch has been resolved (all URLs now point to `natureloverstravels.com`).
 
 ═══════════════════════════════════════════════════════════════════════════════
 SECTION 1: SEO INFRASTRUCTURE — CRITICAL (Make You Visible to Google)
@@ -33,7 +33,7 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin/
-Sitemap: https://natureloversadventure.co.ke/sitemap.xml
+Sitemap: https://natureloverstravels.com/sitemap.xml
 
 User-agent: AdsBot-Google
 Allow: /
@@ -44,27 +44,27 @@ Allow: /
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://natureloversadventure.co.ke/</loc>
+    <loc>https://natureloverstravels.com/</loc>
     <lastmod>2026-05-27</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://natureloversadventure.co.ke/safari-packages</loc>
+    <loc>https://natureloverstravels.com/safari-packages</loc>
     <lastmod>2026-05-27</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://natureloversadventure.co.ke/contact</loc>
+    <loc>https://natureloverstravels.com/contact</loc>
     <lastmod>2026-05-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://natureloversadventure.co.ke/our-story</loc>
+    <loc>https://natureloverstravels.com/our-story</loc>
     <lastmod>2026-05-27</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://natureloversadventure.co.ke/services</loc>
+    <loc>https://natureloverstravels.com/services</loc>
     <lastmod>2026-05-27</lastmod>
     <priority>0.8</priority>
   </url>
@@ -89,9 +89,9 @@ A. LocalBusiness Schema (Homepage + All Pages)
      "@type": "LocalBusiness",
      "name": "Nature Lovers Adventure",
      "description": "Luxury safari and travel packages across Kenya and Tanzania",
-     "url": "https://natureloversadventure.co.ke",
+     "url": "https://natureloverstravels.com",
      "telephone": "+254724660170",
-     "email": "info@natureloversadventure.co.ke",
+     "email": "info@natureloverstravels.com",
      "address": {
        "@type": "PostalAddress",
        "streetAddress": "Your Street Address, Nairobi",
@@ -105,7 +105,7 @@ A. LocalBusiness Schema (Homepage + All Pages)
        "latitude": "-1.2921",
        "longitude": "36.8219"
      },
-     "image": "https://natureloversadventure.co.ke/og-image-1200x630.jpg",
+     "image": "https://natureloverstravels.com/og-image-1200x630.jpg",
      "priceRange": "$$$",
      "openingHoursSpecification": {
        "@type": "OpeningHoursSpecification",
@@ -142,7 +142,7 @@ B. TouristTrip Schema (Safari Packages Page)
      "provider": {
        "@type": "Organization",
        "name": "Nature Lovers Adventure",
-       "url": "https://natureloversadventure.co.ke"
+       "url": "https://natureloverstravels.com"
      }
    })}
    </script>
@@ -157,8 +157,8 @@ C. BreadcrumbList Schema (All Pages)
      "@context": "https://schema.org",
      "@type": "BreadcrumbList",
      "itemListElement": [
-       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://natureloversadventure.co.ke" },
-       { "@type": "ListItem", "position": 2, "name": "Safari Packages", "item": "https://natureloversadventure.co.ke/safari-packages" }
+       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://natureloverstravels.com" },
+       { "@type": "ListItem", "position": 2, "name": "Safari Packages", "item": "https://natureloverstravels.com/safari-packages" }
      ]
    })}
    </script>
@@ -206,7 +206,7 @@ D. FAQPage Schema (Contact + Packages Pages)
 ──────────────────────────────────────────────────────────────────────────────
 Add to <Head> in src/routes/__root.tsx:
 
-<link rel="canonical" href="https://natureloversadventure.co.ke/" />
+<link rel="canonical" href="https://natureloverstravels.com/" />
 
 (TanStack Router auto-generates correct URL per route)
 
@@ -380,7 +380,7 @@ A. Create Supabase tables:
    └─────────────┴──────────┴─────────────────────┘
 
    Seed with Steve + any co-managers:
-   - steve@natureloversadventure.co.ke
+   - info@natureloverstravels.com
    - [Additional managers as needed]
 
 B. Create src/routes/admin/login.tsx
